@@ -64,4 +64,8 @@ export default class MetaData {
       console.log(this.parsedBlob)
     } catch {}
   }
+
+  async getAudioSrc() {
+    return URL.createObjectURL(this.file)
+  }
 }
