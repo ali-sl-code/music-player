@@ -77,7 +77,13 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 })
 
-export default function MusicPlayerSlider({ poster, title, artist, genre }) {
+export default function MusicPlayerSlider({
+  poster,
+  title,
+  artist,
+  genre,
+  audio,
+}) {
   const theme = useTheme()
   const duration = 200 // seconds
   const [position, setPosition] = React.useState(32)
@@ -172,7 +178,10 @@ export default function MusicPlayerSlider({ poster, title, artist, genre }) {
           </IconButton>
           <IconButton
             aria-label={paused ? 'play' : 'pause'}
-            onClick={() => setPaused(!paused)}
+            onClick={() => setPaused((prePaused) => {
+              prePaused ? audio.play() : audio.pause()
+              return !prePaused
+            })}
           >
             {paused ? (
               <PlayArrowRounded
