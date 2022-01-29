@@ -8,7 +8,7 @@ export default function Application() {
   const [title, setTitle] = useState()
   const [artist, setArtist] = useState()
   const [genre, setGenre] = useState()
-  const [audioSrc, setAudioSrc] = useState()
+  const [audio, setAudio] = useState()
 
   const [metaData, setMetaData] = useState(null)
   const handler = async e => {
@@ -23,7 +23,7 @@ export default function Application() {
     metaData.getTitle().then(setTitle)
     metaData.getArtist().then(setArtist)
     metaData.getGenre().then(setGenre)
-    metaData.getAudioSrc().then(setAudioSrc)
+    metaData.getAudio().then(setAudio)
   }, [metaData])
 
   return (
@@ -36,8 +36,8 @@ export default function Application() {
         title={title}
         artist={artist}
         poster={imageSrc}
+        audio={audio}
       />
-      <audio src={audioSrc} controls autoPlay></audio>
     </Stack>
   )
 }

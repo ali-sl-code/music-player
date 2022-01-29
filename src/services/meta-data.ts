@@ -65,7 +65,10 @@ export default class MetaData {
     } catch {}
   }
 
-  async getAudioSrc() {
-    return URL.createObjectURL(this.file)
+  async getAudio() {
+    const urlObject = URL.createObjectURL(this.file)
+    let audio = new Audio(urlObject)
+    audio.autoplay = true
+    return audio
   }
 }
