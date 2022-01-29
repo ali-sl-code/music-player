@@ -1,0 +1,46 @@
+{
+  "name": "weblite-music",
+  "title": "Weblite Music",
+  "description": "weblite awesome music player based on material ui template",
+  "main": "index.tsx",
+  "scripts": {
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-scripts": "latest"
+  },
+  "dependencies": {
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
+    "@mui/icons-material": "next",
+    "@mui/material": "next",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "base64-arraybuffer": "1.0.1",
+    "module-alias": "^2.2.2",
+    "music-metadata-browser": "2.5.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "latest"
+  },
+  "_moduleAliases": {
+    "@services": "build/services",
+    "@components": "build/components"
+  },
+  "version": "0.0.10",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
