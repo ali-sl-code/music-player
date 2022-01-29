@@ -88,11 +88,15 @@ export default function MusicPlayerSlider({
   const duration = 200 // seconds
   const [position, setPosition] = React.useState(32)
   const [paused, setPaused] = React.useState(false)
+  const [volume, setVolume] = React.useState(30)
   function formatDuration(value: number) {
     const minute = Math.floor(value / 60)
     const secondLeft = value - minute * 60
     return `${minute}:${secondLeft < 9 ? `0${secondLeft}` : secondLeft}`
   }
+  React.useEffect(() => {
+    if (audio) audio.volume = volume / 100
+  }, [audio, volume])
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000'
   const lightIconColor =
     theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)'
@@ -208,7 +212,10 @@ export default function MusicPlayerSlider({
           <VolumeDownRounded htmlColor={lightIconColor} />
           <Slider
             aria-label="Volume"
-            defaultValue={30}
+            value={volume}
+            onChange={(e: any) => {
+              setVolume(e.target.value)
+            }}
             sx={{
               color:
                 theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
