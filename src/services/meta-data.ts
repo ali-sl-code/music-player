@@ -69,6 +69,7 @@ export default class MetaData {
     const urlObject = URL.createObjectURL(this.file)
     let audio = new Audio(urlObject)
     audio.autoplay = true
+    audio.volume = 0.3
     return audio
   }
 }
