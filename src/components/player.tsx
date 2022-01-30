@@ -97,15 +97,27 @@ export default function MusicPlayerSlider({
 
   //* Set music duration
   React.useEffect(() => {
-    if (audio.current != null)
+    if (audio.current != null) {
       audio.current.addEventListener('loadedmetadata', e => {
-        console.log(e.target.duration)
-        setDuration(Math.floor(e.target.duration))
+        setDuration(e.target.duration)
       })
 
+      audio.current.addEventListener(
+        'timeupdate',
+        event => {
+          setPosition(event.path[0].currentTime)
+        },
+        false,
+      )
+    }
+
     return () => {
-      audio.current.removeEventListener('loadedmetadata', () => {
-        console.log('loadedmetadata removed')
+      audio.current.removeEventListener('loadedmetadata', e => {
+        setDuration(e.target.duration)
+      })
+
+      audio.current.removeEventListener('timeupdate', event => {
+        setPosition(event.path[0].currentTime)
       })
     }
   }, [audio.current])
@@ -114,11 +126,6 @@ export default function MusicPlayerSlider({
   React.useEffect(() => {
     if (audio.current != null) audio.current.volume = volume / 100
   }, [volume])
-
-  //* Handle music current time
-  React.useEffect(() => {
-    if (audio.current != null) audio.current.currentTime = position
-  }, [position])
 
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000'
   const lightIconColor =
@@ -153,7 +160,11 @@ export default function MusicPlayerSlider({
           min={0}
           step={1}
           max={duration}
-          onChange={(_, value) => setPosition(+value)}
+          onChange={(_, value) => {
+            setPosition(+value)
+            //* Handle music current time
+            audio.current.currentTime = +value
+          }}
           sx={{
             color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
             height: 4,
@@ -189,8 +200,10 @@ export default function MusicPlayerSlider({
             mt: -2,
           }}
         >
-          <TinyText>{formatDuration(position)}</TinyText>
-          <TinyText>-{formatDuration(duration - position)}</TinyText>
+          <TinyText>{formatDuration(Math.floor(position))}</TinyText>
+          <TinyText>
+            -{formatDuration(Math.floor(duration) - Math.floor(position))}
+          </TinyText>
         </Box>
         <Box
           sx={{
