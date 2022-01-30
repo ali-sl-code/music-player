@@ -85,8 +85,8 @@ export default function MusicPlayerSlider({
   audio,
 }) {
   const theme = useTheme()
-  const duration = 200 // seconds
-  const [position, setPosition] = React.useState(32)
+  const [duration, setDuration] = React.useState(200) // seconds
+  const [position, setPosition] = React.useState(0)
   const [paused, setPaused] = React.useState(false)
   const [volume, setVolume] = React.useState(30)
   function formatDuration(value: number) {
@@ -94,9 +94,32 @@ export default function MusicPlayerSlider({
     const secondLeft = value - minute * 60
     return `${minute}:${secondLeft < 9 ? `0${secondLeft}` : secondLeft}`
   }
+
+  //* Set music duration
   React.useEffect(() => {
-    if (audio) audio.volume = volume / 100
-  }, [audio, volume])
+    if (audio.current != null)
+      audio.current.addEventListener('loadedmetadata', e => {
+        console.log(e.target.duration)
+        setDuration(Math.floor(e.target.duration))
+      })
+
+    return () => {
+      audio.current.removeEventListener('loadedmetadata', () => {
+        console.log('loadedmetadata removed')
+      })
+    }
+  }, [audio.current])
+
+  //* Handle music volume
+  React.useEffect(() => {
+    if (audio.current != null) audio.current.volume = volume / 100
+  }, [volume])
+
+  //* Handle music current time
+  React.useEffect(() => {
+    if (audio.current != null) audio.current.currentTime = position
+  }, [position])
+
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000'
   const lightIconColor =
     theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)'
@@ -182,10 +205,14 @@ export default function MusicPlayerSlider({
           </IconButton>
           <IconButton
             aria-label={paused ? 'play' : 'pause'}
-            onClick={() => setPaused((prePaused) => {
-              prePaused ? audio.play() : audio.pause()
-              return !prePaused
-            })}
+            onClick={() =>
+              setPaused(prePaused => {
+                if (audio.current != null)
+                  //* Handle music play and pause
+                  paused ? audio.current.play() : audio.current.pause()
+                return !prePaused
+              })
+            }
           >
             {paused ? (
               <PlayArrowRounded
