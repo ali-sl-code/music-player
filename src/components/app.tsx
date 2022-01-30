@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Stack } from '@mui/material'
-import RaptorHowler from 'raptor-howler'
 import MetaData from '../services/meta-data'
 import MusicPlayerSlider from './player'
 
