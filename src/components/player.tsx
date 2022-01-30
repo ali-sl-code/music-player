@@ -11,7 +11,7 @@ import FastForwardRounded from '@mui/icons-material/FastForwardRounded'
 import FastRewindRounded from '@mui/icons-material/FastRewindRounded'
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
-import IMG1 from '../img/281016-musicbrain.jpg'
+import IMG1 from '../img/c870x524.jpg'
 
 const WallPaper = styled('div')({
   position: 'absolute',
@@ -20,7 +20,7 @@ const WallPaper = styled('div')({
   top: 0,
   left: 0,
   overflow: 'hidden',
-  background: 'linear-gradient(rgb(255, 38, 142) 0%, rgb(255, 105, 79) 100%)',
+  background: 'rgb(51, 16, 49)',
   transition: 'all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s',
   '&:before': {
     content: '""',
@@ -30,7 +30,7 @@ const WallPaper = styled('div')({
     top: '-40%',
     right: '-50%',
     background:
-      'radial-gradient(at center center, rgb(62, 79, 249) 0%, rgba(62, 79, 249, 0) 64%)',
+      'rgb(51, 16, 49)',
   },
   '&:after': {
     content: '""',
@@ -40,19 +40,22 @@ const WallPaper = styled('div')({
     bottom: '-50%',
     left: '-30%',
     background:
-      'radial-gradient(at center center, rgb(247, 237, 225) 0%, rgba(247, 237, 225, 0) 70%)',
+      'rgb(51, 16, 49)',
     transform: 'rotate(30deg)',
   },
 })
 
 const Widget = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-   width:'70vw',
-   margin:50,
+   width:'80vw',
+
+  marginTop:50
   },
+  
   padding: 16,
   borderRadius: 16,
-  width: '55vw',
+  width: '45vw',
+  
   height: 600,
   maxWidth: '100%',
   margin: 'auto',
@@ -63,9 +66,14 @@ const Widget = styled('div')(({ theme }) => ({
   backdropFilter: 'blur(40px)',
 }))
 
-const CoverImage = styled('div')({
-  width: '55vw',
-  height: 300 ,
+const CoverImage = styled('div')(({ theme }) =>({
+  [theme.breakpoints.down('md')]: {
+    width:'80vw',
+  
+   
+   },
+  width: '45vw',
+  height: 400 ,
   objectFit: 'cover',
   overflow: 'hidden',
   flexShrink: 0,
@@ -74,7 +82,7 @@ const CoverImage = styled('div')({
   '& > img': {
     width: '100%',
   },
-})
+}))
 
 const TinyText = styled(Typography)({
   fontSize: '0.75rem',
@@ -134,10 +142,12 @@ export default function MusicPlayerSlider({
       <Widget>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <CoverImage>
-           {poster?<img alt="can't win - Chilling Sunday" src={poster} />:
-           <img alt="can't win - Chilling Sunday" src={IMG1}/>} 
+           {poster?<img alt="can't win - Chilling Sunday" src={poster} height={400} />:
+           <img alt="can't win - Chilling Sunday" src={IMG1} height={400}/>} 
           </CoverImage>
-          <Box sx={{ ml: 1.5, minWidth: 0 }}>
+          
+        </Box>
+        <Box sx={{ ml: 1.5, minWidth: 0 }}>
             <Typography
               variant="caption"
               color="text.secondary"
@@ -152,7 +162,6 @@ export default function MusicPlayerSlider({
               {artist}
             </Typography>
           </Box>
-        </Box>
         <Slider
           aria-label="time-indicator"
           size="small"
@@ -236,14 +245,16 @@ export default function MusicPlayerSlider({
           <IconButton aria-label="next song">
             <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
           </IconButton>
-        </Box>
-        <Stack
+          <Stack
+          // width='15vw'
+          // position='absolute'
+          // right='4px'
           spacing={2}
           direction="row"
           sx={{ mb: 1, px: 1 }}
           alignItems="center"
         >
-          <VolumeDownRounded htmlColor={lightIconColor} />
+          <VolumeDownRounded htmlColor={lightIconColor} sx={{position:'absolute',right:120}} />
           <Slider
             aria-label="Volume"
             value={volume}
@@ -251,6 +262,9 @@ export default function MusicPlayerSlider({
               setVolume(e.target.value)
             }}
             sx={{
+              width:90,
+              position:'absolute',
+              right:30,
               color:
                 theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
               '& .MuiSlider-track': {
@@ -269,10 +283,13 @@ export default function MusicPlayerSlider({
               },
             }}
           />
-          <VolumeUpRounded htmlColor={lightIconColor} />
+          <VolumeUpRounded htmlColor={lightIconColor} sx={{position:'absolute',right:3}}/>
         </Stack>
+        </Box>
+       
       </Widget>
       <WallPaper />
+      
     </Box>
   )
 }
