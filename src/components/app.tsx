@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Stack } from '@mui/material'
+import RaptorHowler from 'raptor-howler'
 import MetaData from '../services/meta-data'
 import MusicPlayerSlider from './player'
 
@@ -8,7 +9,9 @@ export default function Application() {
   const [title, setTitle] = useState()
   const [artist, setArtist] = useState()
   const [genre, setGenre] = useState()
-  const [audio, setAudio] = useState()
+  const [audioSrc, setAudioSrc] = useState()
+
+  const audio = React.useRef(null)
 
   const [metaData, setMetaData] = useState(null)
   const handler = async e => {
@@ -23,11 +26,12 @@ export default function Application() {
     metaData.getTitle().then(setTitle)
     metaData.getArtist().then(setArtist)
     metaData.getGenre().then(setGenre)
-    metaData.getAudio().then(setAudio)
+    metaData.getAudioSrc().then(setAudioSrc)
   }, [metaData])
 
   return (
     <Stack>
+      <audio src={audioSrc} ref={audio} autoPlay></audio>
       <Box sx={{ position: 'absolute', zIndex: 2 }}>
         <input type="file" onChange={handler} />
       </Box>
