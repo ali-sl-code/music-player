@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { styled, useTheme } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Slider from '@mui/material/Slider'
@@ -12,84 +12,7 @@ import FastRewindRounded from '@mui/icons-material/FastRewindRounded'
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
 import IMG1 from '../img/c870x524.jpg'
-
-const WallPaper = styled('div')({
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  top: 0,
-  left: 0,
-  overflow: 'hidden',
-  background: 'rgb(51, 16, 49)',
-  transition: 'all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s',
-  '&:before': {
-    content: '""',
-    width: '140%',
-    height: '140%',
-    position: 'absolute',
-    top: '-40%',
-    right: '-50%',
-    background:
-      'rgb(51, 16, 49)',
-  },
-  '&:after': {
-    content: '""',
-    width: '140%',
-    height: '140%',
-    position: 'absolute',
-    bottom: '-50%',
-    left: '-30%',
-    background:
-      'rgb(51, 16, 49)',
-    transform: 'rotate(30deg)',
-  },
-})
-
-const Widget = styled('div')(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-   width:'80vw',
-
-  marginTop:50
-  },
-  
-  padding: 16,
-  borderRadius: 16,
-  width: '45vw',
-  
-  height: 600,
-  maxWidth: '100%',
-  margin: 'auto',
-  position: 'relative',
-  zIndex: 1,
-  backgroundColor:
-    theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)',
-  backdropFilter: 'blur(40px)',
-}))
-
-const CoverImage = styled('div')(({ theme }) =>({
-  [theme.breakpoints.down('md')]: {
-    width:'80vw',
-  
-   
-   },
-  width: '45vw',
-  height: 400 ,
-  objectFit: 'cover',
-  overflow: 'hidden',
-  flexShrink: 0,
-  borderRadius: 8,
-  backgroundColor: 'rgba(0,0,0,0.08)',
-  '& > img': {
-    width: '100%',
-  },
-}))
-
-const TinyText = styled(Typography)({
-  fontSize: '0.75rem',
-  opacity: 0.38,
-  fontWeight: 500,
-  letterSpacing: 0.2,
-})
+import { WallPaper, Widget, CoverImage, TinyText } from './player-components'
 
 export default function MusicPlayerSlider({
   poster,
@@ -142,26 +65,28 @@ export default function MusicPlayerSlider({
       <Widget>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <CoverImage>
-           {poster?<img alt="can't win - Chilling Sunday" src={poster} height={400} />:
-           <img alt="can't win - Chilling Sunday" src={IMG1} height={400}/>} 
+            {poster ? (
+              <img
+                alt="can't win - Chilling Sunday"
+                src={poster}
+                height={400}
+              />
+            ) : (
+              <img alt="can't win - Chilling Sunday" src={IMG1} height={400} />
+            )}
           </CoverImage>
-          
         </Box>
         <Box sx={{ ml: 1.5, minWidth: 0 }}>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              fontWeight={500}
-            >
-              {genre}
-            </Typography>
-            <Typography noWrap>
-              <b>{title}</b>
-            </Typography>
-            <Typography noWrap letterSpacing={-0.25}>
-              {artist}
-            </Typography>
-          </Box>
+          <Typography variant="caption" color="text.secondary" fontWeight={500}>
+            {genre}
+          </Typography>
+          <Typography noWrap>
+            <b>{title}</b>
+          </Typography>
+          <Typography noWrap letterSpacing={-0.25}>
+            {artist}
+          </Typography>
+        </Box>
         <Slider
           aria-label="time-indicator"
           size="small"
@@ -246,50 +171,54 @@ export default function MusicPlayerSlider({
             <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
           </IconButton>
           <Stack
-          // width='15vw'
-          // position='absolute'
-          // right='4px'
-          spacing={2}
-          direction="row"
-          sx={{ mb: 1, px: 1 }}
-          alignItems="center"
-        >
-          <VolumeDownRounded htmlColor={lightIconColor} sx={{position:'absolute',right:120}} />
-          <Slider
-            aria-label="Volume"
-            value={volume}
-            onChange={(e: any) => {
-              setVolume(e.target.value)
-            }}
-            sx={{
-              width:90,
-              position:'absolute',
-              right:30,
-              color:
-                theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
-              '& .MuiSlider-track': {
-                border: 'none',
-              },
-              '& .MuiSlider-thumb': {
-                width: 24,
-                height: 24,
-                backgroundColor: '#fff',
-                '&:before': {
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
+            // width='15vw'
+            // position='absolute'
+            // right='4px'
+            spacing={2}
+            direction="row"
+            sx={{ mb: 1, px: 1 }}
+            alignItems="center"
+          >
+            <VolumeDownRounded
+              htmlColor={lightIconColor}
+              sx={{ position: 'absolute', right: 120 }}
+            />
+            <Slider
+              aria-label="Volume"
+              value={volume}
+              onChange={(e: any) => {
+                setVolume(e.target.value)
+              }}
+              sx={{
+                width: 90,
+                position: 'absolute',
+                right: 30,
+                color:
+                  theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
+                '& .MuiSlider-track': {
+                  border: 'none',
                 },
-                '&:hover, &.Mui-focusVisible, &.Mui-active': {
-                  boxShadow: 'none',
+                '& .MuiSlider-thumb': {
+                  width: 24,
+                  height: 24,
+                  backgroundColor: '#fff',
+                  '&:before': {
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
+                  },
+                  '&:hover, &.Mui-focusVisible, &.Mui-active': {
+                    boxShadow: 'none',
+                  },
                 },
-              },
-            }}
-          />
-          <VolumeUpRounded htmlColor={lightIconColor} sx={{position:'absolute',right:3}}/>
-        </Stack>
+              }}
+            />
+            <VolumeUpRounded
+              htmlColor={lightIconColor}
+              sx={{ position: 'absolute', right: 3 }}
+            />
+          </Stack>
         </Box>
-       
       </Widget>
       <WallPaper />
-      
     </Box>
   )
 }
