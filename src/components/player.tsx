@@ -11,6 +11,7 @@ import FastForwardRounded from '@mui/icons-material/FastForwardRounded'
 import FastRewindRounded from '@mui/icons-material/FastRewindRounded'
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
+import IMG1 from '../img/281016-musicbrain.jpg'
 
 const WallPaper = styled('div')({
   position: 'absolute',
@@ -45,9 +46,14 @@ const WallPaper = styled('div')({
 })
 
 const Widget = styled('div')(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+   width:'70vw',
+   margin:50,
+  },
   padding: 16,
   borderRadius: 16,
-  width: 343,
+  width: '55vw',
+  height: 600,
   maxWidth: '100%',
   margin: 'auto',
   position: 'relative',
@@ -58,8 +64,8 @@ const Widget = styled('div')(({ theme }) => ({
 }))
 
 const CoverImage = styled('div')({
-  width: 100,
-  height: 100,
+  width: '55vw',
+  height: 300 ,
   objectFit: 'cover',
   overflow: 'hidden',
   flexShrink: 0,
@@ -128,7 +134,8 @@ export default function MusicPlayerSlider({
       <Widget>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <CoverImage>
-            <img alt="can't win - Chilling Sunday" src={poster} />
+           {poster?<img alt="can't win - Chilling Sunday" src={poster} />:
+           <img alt="can't win - Chilling Sunday" src={IMG1}/>} 
           </CoverImage>
           <Box sx={{ ml: 1.5, minWidth: 0 }}>
             <Typography
