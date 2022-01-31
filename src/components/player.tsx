@@ -28,7 +28,7 @@ export default function MusicPlayerSlider({
   audio,
 }) {
   const theme = useTheme()
-  const [duration, setDuration] = React.useState(200) // seconds
+  const [duration, setDuration] = React.useState(0) // seconds
   const [position, setPosition] = React.useState(0)
   const [paused, setPaused] = React.useState(false)
   const [volume, setVolume] = React.useState(30)
@@ -109,7 +109,11 @@ export default function MusicPlayerSlider({
           min={0}
           step={1}
           max={duration}
-          onChange={(_, value) => setPosition(+value)}
+          onChange={(_, value) => {
+            setPosition(+value)
+            //* Handle music currentTime
+            audio.current.currentTime = +value
+          }}
         />
         <Stack
           direction="row"
@@ -117,8 +121,8 @@ export default function MusicPlayerSlider({
           justifyContent="space-between"
           sx={{ mt: '-2' }}
         >
-          <TinyText>{formatDuration(position)}</TinyText>
-          <TinyText>-{formatDuration(duration - position)}</TinyText>
+          <TinyText>{formatDuration(Math.floor(position))}</TinyText>
+          <TinyText>-{formatDuration(Math.floor(duration) - Math.floor(position))}</TinyText>
         </Stack>
         <Stack
           direction="row"
