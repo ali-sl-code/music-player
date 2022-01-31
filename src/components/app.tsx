@@ -3,6 +3,7 @@ import { Box, Stack } from '@mui/material'
 import MetaData from '../services/meta-data'
 import getFileList from './../utils/getFileList'
 import MusicPlayerSlider from './player'
+import './app-style.css'
 
 export default function Application() {
   const [imageSrc, setImageSrc] = useState()
@@ -32,13 +33,12 @@ export default function Application() {
     metaData.getGenre().then(setGenre)
     metaData.getAudioSrc().then(setAudioSrc)
   }, [metaData])
-
   return (
     <Stack>
       <audio src={audioSrc} ref={audio} autoPlay></audio>
-      <Box sx={{ position: 'absolute', zIndex: 2 }}>
+      {/* <Box sx={{ position: 'absolute', zIndex: 2 }}>
         <input type="file" onChange={handler} accept="audio/*" multiple />
-      </Box>
+      </Box> */}
       <MusicPlayerSlider
         genre={genre}
         title={title}
@@ -46,6 +46,22 @@ export default function Application() {
         poster={imageSrc}
         audio={audio}
       />
+      <Box>
+        <div id="inputFileContainer">
+          <input
+            className="input-file"
+            id="musicFile"
+            type="file"
+            onChange={handler}
+            accept="audio/*"
+            multiple
+          />
+          <label htmlFor="musicFile" className="input-file-trigger">
+            Select a file...
+          </label>
+        </div>
+        {/* <input type="file" onChange={handler} /> */}
+      </Box>
     </Stack>
   )
 }

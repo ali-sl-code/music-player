@@ -1,0 +1,42 @@
+#inputFileContainer {
+  position: relative;
+  width: 225px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#inputFileContainer .input-file-trigger {
+  display: block;
+  padding: 14px 45px;
+  background:#1B202E;
+  color: #fff;
+  font-size: 1em;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+#inputFileContainer .input-file {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 225px;
+  opacity: 0;
+  padding: 14px 0;
+  cursor: pointer;
+}
+
+#inputFileContainer .input-file:hover + .input-file-trigger,
+#inputFileContainer .input-file:focus + .input-file-trigger,
+#inputFileContainer .input-file-trigger:hover,
+#inputFileContainer .input-file-trigger:focus {
+  background: #1e222e;
+  color: #fff;
+}
+
+.file-return {
+  margin: 0;
+}
+
+.file-return:not(:empty) {
+  margin: 1em 0;
+}
