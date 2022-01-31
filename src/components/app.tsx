@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Stack } from '@mui/material'
 import MetaData from '../services/meta-data'
+import getFileList from './../utils/getFileList'
 import MusicPlayerSlider from './player'
 
 export default function Application() {
@@ -8,14 +9,16 @@ export default function Application() {
   const [title, setTitle] = useState()
   const [artist, setArtist] = useState()
   const [genre, setGenre] = useState()
+  const [audioID, setAudioID] = useState(0)
+  const [audioList, setAudioList] = useState([])
   const [audioSrc, setAudioSrc] = useState()
 
   const audio = React.useRef(null)
 
   const [metaData, setMetaData] = useState(null)
   const handler = async e => {
-    const blob = e.target.files[0]
-    setMetaData(new MetaData(blob))
+    setAudioList(getFileList(e))
+    setMetaData(new MetaData(e.target.files[audioID]))
   }
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export default function Application() {
     <Stack>
       <audio src={audioSrc} ref={audio} autoPlay></audio>
       <Box sx={{ position: 'absolute', zIndex: 2 }}>
-        <input type="file" onChange={handler} />
+        <input type="file" onChange={handler} accept="audio/*" multiple />
       </Box>
       <MusicPlayerSlider
         genre={genre}
