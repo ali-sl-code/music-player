@@ -4,6 +4,7 @@
   "description": "weblite awesome music player based on material ui template",
   "main": "index.tsx",
   "scripts": {
+    "start": "react-scripts start",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
