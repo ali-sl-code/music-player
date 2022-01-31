@@ -30,7 +30,7 @@ export default function MusicPlayerSlider({
   const theme = useTheme()
   const [duration, setDuration] = React.useState(0) // seconds
   const [position, setPosition] = React.useState(0)
-  const [paused, setPaused] = React.useState(false)
+  const [paused, setPaused] = React.useState(true)
   const [volume, setVolume] = React.useState(30)
   function formatDuration(value: number) {
     const minute = Math.floor(value / 60)
@@ -43,6 +43,7 @@ export default function MusicPlayerSlider({
     if (audio.current != null) {
       audio.current.addEventListener('loadedmetadata', e => {
         setDuration(e.target.duration)
+        setPaused(false)
       })
 
       audio.current.addEventListener(
@@ -57,6 +58,7 @@ export default function MusicPlayerSlider({
     return () => {
       audio.current.removeEventListener('loadedmetadata', e => {
         setDuration(e.target.duration)
+        setPaused(true)
       })
 
       audio.current.removeEventListener('timeupdate', event => {
@@ -73,7 +75,6 @@ export default function MusicPlayerSlider({
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000'
   const lightIconColor =
     theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)'
-
 
   return (
     <Box sx={{ width: '100%', overflow: 'hidden' }}>
@@ -122,7 +123,9 @@ export default function MusicPlayerSlider({
           sx={{ mt: '-2' }}
         >
           <TinyText>{formatDuration(Math.floor(position))}</TinyText>
-          <TinyText>-{formatDuration(Math.floor(duration) - Math.floor(position))}</TinyText>
+          <TinyText>
+            -{formatDuration(Math.floor(duration) - Math.floor(position))}
+          </TinyText>
         </Stack>
         <Stack
           direction="row"
@@ -139,20 +142,22 @@ export default function MusicPlayerSlider({
             aria-label={paused ? 'play' : 'pause'}
             onClick={() =>
               setPaused(prePaused => {
-                if (audio.current != null)
+                if (audio.current.src != '') {
                   //* Handle music play and pause
                   paused ? audio.current.play() : audio.current.pause()
-                return !prePaused
+                  return !prePaused
+                }
+                return prePaused
               })
             }
           >
             {!paused ? (
-              <PlayArrowRounded
-                sx={{ fontSize: '3rem' }}
-                htmlColor={mainIconColor}
-              />
-            ) : (
               <PauseRounded
+              sx={{ fontSize: '3rem' }}
+              htmlColor={mainIconColor}
+            />
+            ) : (
+              <PlayArrowRounded
                 sx={{ fontSize: '3rem' }}
                 htmlColor={mainIconColor}
               />

@@ -17,8 +17,10 @@ export default function Application() {
 
   const [metaData, setMetaData] = useState(null)
   const handler = async e => {
-    setAudioList(getFileList(e))
-    setMetaData(new MetaData(e.target.files[audioID]))
+    if (e.target.files.length) {
+      setAudioList(getFileList(e))
+      setMetaData(new MetaData(e.target.files[audioID]))
+    }
   }
 
   useEffect(() => {
