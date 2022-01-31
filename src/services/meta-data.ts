@@ -33,7 +33,7 @@ export default class MetaData {
     try {
       await this.initiateMusicMetaDataBlob()
       const { common } = this.parsedBlob
-      return common.title
+      return common.title ? common.title : 'Music name is undefined'
     } catch {}
   }
 
