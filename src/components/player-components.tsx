@@ -1,4 +1,5 @@
-import { styled, useTheme } from '@mui/material/styles'
+import { Slider } from '@mui/material'
+import { styled} from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 export const WallPaper = styled('div')({
@@ -30,6 +31,8 @@ export const WallPaper = styled('div')({
     transform: 'rotate(30deg)',
   },
 })
+
+
 export const Widget = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     width: '80vw',
@@ -50,6 +53,8 @@ export const Widget = styled('div')(({ theme }) => ({
     theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)',
   backdropFilter: 'blur(40px)',
 }))
+
+
 export const CoverImage = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     width: '80vw',
@@ -66,9 +71,62 @@ export const CoverImage = styled('div')(({ theme }) => ({
   },
 }))
 
+
+
 export const TinyText = styled(Typography)({
   fontSize: '0.75rem',
   opacity: 0.38,
   fontWeight: 500,
   letterSpacing: 0.2,
 })
+
+
+export const TimeIndicator = styled(Slider)(({ theme }) => ({
+  color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
+  height: 4,
+  '& .MuiSlider-thumb': {
+    width: 8,
+    height: 8,
+    transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
+    '&:before': {
+      boxShadow: '0 2px 12px 0 rgba(0,0,0,0.4)',
+    },
+    '&:hover, &.Mui-focusVisible': {
+      boxShadow: `0px 0px 0px 8px ${
+        theme.palette.mode === 'dark'
+          ? 'rgb(255 255 255 / 16%)'
+          : 'rgb(0 0 0 / 16%)'
+      }`,
+    },
+    '&.Mui-active': {
+      width: 20,
+      height: 20,
+    },
+  },
+  '& .MuiSlider-rail': {
+    opacity: 0.28,
+  },
+}))
+
+
+
+export const VolumeIndicator = styled(Slider)(({ theme }) => ({
+  width: 90,
+  position: 'absolute',
+  right: 30,
+  color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
+  '& .MuiSlider-track': {
+    border: 'none',
+  },
+  '& .MuiSlider-thumb': {
+    width: 24,
+    height: 24,
+    backgroundColor: '#fff',
+    '&:before': {
+      boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
+    },
+    '&:hover, &.Mui-focusVisible, &.Mui-active': {
+      boxShadow: 'none',
+    },
+  },
+}))
