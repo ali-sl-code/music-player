@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Box, Stack } from '@mui/material'
 import MetaData from '../services/meta-data'
 import MusicPlayerSlider from './player'
-
+import './app-style.css'
 export default function Application() {
   const [imageSrc, setImageSrc] = useState()
   const [title, setTitle] = useState()
@@ -14,6 +14,8 @@ export default function Application() {
 
   const [metaData, setMetaData] = useState(null)
   const handler = async e => {
+    const the_return = document.querySelector('.file-return')
+    the_return.innerHTML = e.target.value
     const blob = e.target.files[0]
     setMetaData(new MetaData(blob))
   }
@@ -27,13 +29,12 @@ export default function Application() {
     metaData.getGenre().then(setGenre)
     metaData.getAudioSrc().then(setAudioSrc)
   }, [metaData])
-
+  useEffect(() => {
+    document.querySelector('html').classList.add('js')
+  }, [])
   return (
     <Stack>
       <audio src={audioSrc} ref={audio} autoPlay></audio>
-      <Box sx={{ position: 'absolute', zIndex: 2 }}>
-        <input type="file" onChange={handler} />
-      </Box>
       <MusicPlayerSlider
         genre={genre}
         title={title}
@@ -41,6 +42,23 @@ export default function Application() {
         poster={imageSrc}
         audio={audio}
       />
+      <Box>
+        <div className="container">
+          <div className="input-file-container">
+            <input
+              className="input-file"
+              id="my-file"
+              type="file"
+              onChange={handler}
+            />
+            <label htmlFor="my-file" className="input-file-trigger">
+              Select a file...
+            </label>
+          </div>
+          <p className="file-return"></p>
+        </div>
+        {/* <input type="file" onChange={handler} /> */}
+      </Box>
     </Stack>
   )
 }
