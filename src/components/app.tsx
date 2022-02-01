@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Stack } from '@mui/material'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Box, Stack, List, ListItem } from '@mui/material'
 import MetaData from '../services/meta-data'
 import getFileList from './../utils/getFileList'
 import MusicPlayerSlider from './player'
@@ -10,19 +10,30 @@ export default function Application() {
   const [title, setTitle] = useState()
   const [artist, setArtist] = useState()
   const [genre, setGenre] = useState()
-  const [audioID, setAudioID] = useState(0)
+  // const [audioID, setAudioID] = useState(0)
   const [audioList, setAudioList] = useState([])
   const [audioSrc, setAudioSrc] = useState()
-
-  const audio = React.useRef(null)
-
   const [metaData, setMetaData] = useState(null)
-  const handler = async e => {
+  const [files, setFiles] = useState({})
+
+  const audio = useRef(null)
+
+  const fileHandler = useCallback(async e => {
     if (e.target.files.length) {
       setAudioList(getFileList(e))
-      setMetaData(new MetaData(e.target.files[audioID]))
+      setFiles(e.target.files)
+      setMetaData(new MetaData(e.target.files[0]))
     }
-  }
+  }, [])
+
+  const metaDataHandler = useCallback(
+    id => {
+      if (files) {
+        setMetaData(new MetaData(files[id]))
+      }
+    },
+    [files],
+  )
 
   useEffect(() => {
     if (!metaData) return
@@ -52,7 +63,7 @@ export default function Application() {
             className="input-file"
             id="musicFile"
             type="file"
-            onChange={handler}
+            onChange={fileHandler}
             accept="audio/*"
             multiple
           />
@@ -62,6 +73,30 @@ export default function Application() {
         </div>
         {/* <input type="file" onChange={handler} /> */}
       </Box>
+
+      <List sx={{ marginTop: '20px', marginInline: '5px' }}>
+        {files ? (
+          audioList.map(item => (
+            <ListItem
+              data-id={item.id}
+              key={item.id}
+              sx={{
+                color: 'wheat',
+                borderTop: '1px solid gray',
+                fontSize: 'large',
+              }}
+              onClick={(e: any) => {
+                metaDataHandler(e.target.getAttribute('data-id'))
+              }}
+              button
+            >
+              {item.name}
+            </ListItem>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
+      </List>
     </Stack>
   )
 }
