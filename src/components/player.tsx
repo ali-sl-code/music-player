@@ -10,7 +10,7 @@ import FastForwardRounded from '@mui/icons-material/FastForwardRounded'
 import FastRewindRounded from '@mui/icons-material/FastRewindRounded'
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
-import IMG1 from '../img/c870x524.jpg'
+import DefaultImage from '../img/default_image.jpg'
 import {
   WallPaper,
   Widget,
@@ -32,6 +32,8 @@ export default function MusicPlayerSlider({
   const [position, setPosition] = React.useState(0)
   const [paused, setPaused] = React.useState(true)
   const [volume, setVolume] = React.useState(30)
+
+  //* Duration display
   function formatDuration(value: number) {
     const minute = Math.floor(value / 60)
     const secondLeft = value - minute * 60
@@ -88,7 +90,7 @@ export default function MusicPlayerSlider({
                 height={400}
               />
             ) : (
-              <img alt="can't win - Chilling Sunday" src={IMG1} height={400} />
+              <img alt="can't win - Chilling Sunday" src={DefaultImage} height={400} />
             )}
           </CoverImage>
         </Stack>
