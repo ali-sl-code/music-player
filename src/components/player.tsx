@@ -10,7 +10,11 @@ import FastForwardRounded from '@mui/icons-material/FastForwardRounded'
 import FastRewindRounded from '@mui/icons-material/FastRewindRounded'
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
+import SpeedIcon from '@mui/icons-material/Speed'
+import RepeatIcon from '@mui/icons-material/Repeat'
 import IMG1 from '../img/c870x524.jpg'
+
+
 import {
   WallPaper,
   Widget,
@@ -28,7 +32,7 @@ export default function MusicPlayerSlider({
   audio,
 }) {
   const theme = useTheme()
-  const [duration, setDuration] = React.useState(0) // seconds
+  const [duration, setDuration] = React.useState(200) // seconds
   const [position, setPosition] = React.useState(0)
   const [paused, setPaused] = React.useState(false)
   const [volume, setVolume] = React.useState(30)
@@ -40,27 +44,15 @@ export default function MusicPlayerSlider({
 
   //* Set music duration
   React.useEffect(() => {
-    if (audio.current != null) {
+    if (audio.current !== null)
       audio.current.addEventListener('loadedmetadata', e => {
-        setDuration(e.target.duration)
+        console.log(e.target.duration)
+        setDuration(Math.floor(e.target.duration))
       })
-
-      audio.current.addEventListener(
-        'timeupdate',
-        event => {
-          setPosition(event.path[0].currentTime)
-        },
-        false,
-      )
-    }
 
     return () => {
-      audio.current.removeEventListener('loadedmetadata', e => {
-        setDuration(e.target.duration)
-      })
-
-      audio.current.removeEventListener('timeupdate', event => {
-        setPosition(event.path[0].currentTime)
+      audio.current.removeEventListener('loadedmetadata', () => {
+        console.log('loadedmetadata removed')
       })
     }
   }, [audio.current])
@@ -70,24 +62,30 @@ export default function MusicPlayerSlider({
     if (audio.current != null) audio.current.volume = volume / 100
   }, [volume])
 
+  //* Handle music current time
+  React.useEffect(() => {
+    if (audio.current != null) audio.current.currentTime = position
+  }, [position])
+
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000'
   const lightIconColor =
     theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)'
 
-
   return (
     <Box sx={{ width: '100%', overflow: 'hidden' }}>
+
       <Widget>
+     
         <Stack direction="row" alignItems="center">
           <CoverImage>
             {poster ? (
               <img
                 alt="can't win - Chilling Sunday"
                 src={poster}
-                height={400}
+                height={450}
               />
             ) : (
-              <img alt="can't win - Chilling Sunday" src={IMG1} height={400} />
+              <img alt="can't win - Chilling Sunday" src={IMG1} height={450} />
             )}
           </CoverImage>
         </Stack>
@@ -109,11 +107,7 @@ export default function MusicPlayerSlider({
           min={0}
           step={1}
           max={duration}
-          onChange={(_, value) => {
-            setPosition(+value)
-            //* Handle music currentTime
-            audio.current.currentTime = +value
-          }}
+          onChange={(_, value) => setPosition(+value)}
         />
         <Stack
           direction="row"
@@ -121,46 +115,56 @@ export default function MusicPlayerSlider({
           justifyContent="space-between"
           sx={{ mt: '-2' }}
         >
-          <TinyText>{formatDuration(Math.floor(position))}</TinyText>
-          <TinyText>-{formatDuration(Math.floor(duration) - Math.floor(position))}</TinyText>
+          <TinyText>{formatDuration(position)}</TinyText>
+          <TinyText>-{formatDuration(duration - position)}</TinyText>
         </Stack>
         <Stack
           direction="row"
           alignItems="center"
-          justifyContent="center"
+          justifyContent="space-between"
           sx={{
             mt: -1,
           }}
         >
-          <IconButton aria-label="previous song">
-            <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
-          </IconButton>
-          <IconButton
-            aria-label={paused ? 'play' : 'pause'}
-            onClick={() =>
-              setPaused(prePaused => {
-                if (audio.current != null)
-                  //* Handle music play and pause
-                  paused ? audio.current.play() : audio.current.pause()
-                return !prePaused
-              })
-            }
-          >
-            {!paused ? (
-              <PlayArrowRounded
-                sx={{ fontSize: '3rem' }}
-                htmlColor={mainIconColor}
-              />
-            ) : (
-              <PauseRounded
-                sx={{ fontSize: '3rem' }}
-                htmlColor={mainIconColor}
-              />
-            )}
-          </IconButton>
-          <IconButton aria-label="next song">
-            <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
-          </IconButton>
+          <Box>
+            <IconButton>
+              <SpeedIcon />
+            </IconButton>
+            <IconButton>
+              <RepeatIcon />
+            </IconButton>
+          </Box>
+          <Box mr={12}>
+            <IconButton aria-label="previous song">
+              <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
+            </IconButton>
+            <IconButton
+              aria-label={paused ? 'play' : 'pause'}
+              onClick={() =>
+                setPaused(prePaused => {
+                  if (audio.current != null)
+                    //* Handle music play and pause
+                    paused ? audio.current.play() : audio.current.pause()
+                  return !prePaused
+                })
+              }
+            >
+              {!paused ? (
+                <PlayArrowRounded
+                  sx={{ fontSize: '3rem' }}
+                  htmlColor={mainIconColor}
+                />
+              ) : (
+                <PauseRounded
+                  sx={{ fontSize: '3rem' }}
+                  htmlColor={mainIconColor}
+                />
+              )}
+            </IconButton>
+            <IconButton aria-label="next song">
+              <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
+            </IconButton>
+          </Box>
           <Stack
             // width='15vw'
             // position='absolute'
@@ -185,8 +189,11 @@ export default function MusicPlayerSlider({
               htmlColor={lightIconColor}
               sx={{ position: 'absolute', right: 3 }}
             />
+           
           </Stack>
+          
         </Stack>
+        
       </Widget>
       <WallPaper />
     </Box>
