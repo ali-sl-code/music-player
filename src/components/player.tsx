@@ -26,6 +26,7 @@ export default function MusicPlayerSlider({
   artist,
   genre,
   audio,
+  switchSong,
 }) {
   const theme = useTheme()
   const [duration, setDuration] = React.useState(0) // seconds
@@ -90,7 +91,11 @@ export default function MusicPlayerSlider({
                 height={400}
               />
             ) : (
-              <img alt="can't win - Chilling Sunday" src={DefaultImage} height={400} />
+              <img
+                alt="can't win - Chilling Sunday"
+                src={DefaultImage}
+                height={400}
+              />
             )}
           </CoverImage>
         </Stack>
@@ -137,7 +142,12 @@ export default function MusicPlayerSlider({
             mt: -1,
           }}
         >
-          <IconButton aria-label="previous song">
+          <IconButton
+            aria-label="previous song"
+            onClick={() => {
+              switchSong({ type: "PREV" })
+            }}
+          >
             <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
           </IconButton>
           <IconButton
@@ -155,9 +165,9 @@ export default function MusicPlayerSlider({
           >
             {!paused ? (
               <PauseRounded
-              sx={{ fontSize: '3rem' }}
-              htmlColor={mainIconColor}
-            />
+                sx={{ fontSize: '3rem' }}
+                htmlColor={mainIconColor}
+              />
             ) : (
               <PlayArrowRounded
                 sx={{ fontSize: '3rem' }}
@@ -165,7 +175,12 @@ export default function MusicPlayerSlider({
               />
             )}
           </IconButton>
-          <IconButton aria-label="next song">
+          <IconButton
+            aria-label="next song"
+            onClick={() => {
+              switchSong({ type: "NEXT" })
+            }}
+          >
             <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
           </IconButton>
           <Stack

@@ -1,27 +1,78 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { Box, Stack, List, ListItem } from '@mui/material'
 import MetaData from '../services/meta-data'
 import getFileList from './../utils/getFileList'
 import MusicPlayerSlider from './player'
 import './app-style.css'
 
+interface State {
+  id: number | null,
+  status: 'NEXT' | 'PREV' | null
+}
+
+interface Action {
+  type: 'NEXT' | 'PREV',
+  payload: any
+}
+
 export default function Application() {
+  const audio = useRef(null)
+
   const [imageSrc, setImageSrc] = useState()
   const [title, setTitle] = useState()
   const [artist, setArtist] = useState()
   const [genre, setGenre] = useState()
-  // const [audioID, setAudioID] = useState(0)
+  const [audioID, setAudioID] = useState(0)
   const [audioList, setAudioList] = useState([])
   const [audioSrc, setAudioSrc] = useState()
   const [metaData, setMetaData] = useState(null)
   const [files, setFiles] = useState({})
 
-  const audio = useRef(null)
+  function musicControlReducer(state: State, action: Action) {
+    switch (action.type) {
+      case 'NEXT':
+        return { ...state, status: 'NEXT', id: audioID + 1 }
+        break
+      case 'PREV':
+        return { ...state, status: 'PREV', id: audioID - 1 }
+        break
+      default:
+        return state
+    }
+  }
+
+  const [musicControl, musicControlDispatch] = useReducer(musicControlReducer, {
+    id: null,
+    status: null,
+  })
+
+  useEffect(() => {
+    if (files) {
+      if (musicControl.status == 'NEXT') {
+        // @ts-ignore
+        if (files.length - 1 != audioID) {
+          metaDataHandler(audioID + 1)
+        } else {
+          metaDataHandler(0)
+        }
+      } else if (musicControl.status == 'PREV') {
+        // @ts-ignore
+        if (audioID != 0) {
+          metaDataHandler(audioID - 1)
+        } else {
+          // @ts-ignore
+          metaDataHandler(files.length - 1)
+        }
+      }
+    }
+  }, [musicControl])
+
 
   const fileHandler = useCallback(async e => {
     if (e.target.files.length) {
       setAudioList(getFileList(e))
       setFiles(e.target.files)
+      setAudioID(0)
       setMetaData(new MetaData(e.target.files[0]))
     }
   }, [])
@@ -30,6 +81,7 @@ export default function Application() {
     id => {
       if (files) {
         setMetaData(new MetaData(files[id]))
+        setAudioID(id)
       }
     },
     [files],
@@ -44,6 +96,7 @@ export default function Application() {
     metaData.getGenre().then(setGenre)
     metaData.getAudioSrc().then(setAudioSrc)
   }, [metaData])
+
   return (
     <Stack>
       <audio src={audioSrc} ref={audio} autoPlay></audio>
@@ -56,6 +109,7 @@ export default function Application() {
         artist={artist}
         poster={imageSrc}
         audio={audio}
+        switchSong={musicControlDispatch}
       />
       <Box>
         <div id="inputFileContainer">
