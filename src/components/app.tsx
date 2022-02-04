@@ -103,6 +103,30 @@ export default function Application() {
     metaData.getAudioSrc().then(setAudioSrc)
   }, [metaData])
 
+  useEffect(() => {
+    if (audio.current !== null) {
+      audio.current.addEventListener('ended', () => {
+        if (!loop) {
+          // @ts-ignore
+          if (files.length - 1 != audioID) {
+            metaDataHandler(audioID + 1)
+          }
+        }
+      })
+    }
+
+    return () => {
+      audio.current.removeEventListener('ended', () => {
+        if (!loop) {
+          // @ts-ignore
+          if (files.length - 1 != audioID) {
+            metaDataHandler(audioID + 1)
+          }
+        }
+      })
+    }
+  }, [])
+
   return (
     isAuthenticated && (
       <Box sx={{ backdropFilter: 'blur(2px)!important' }}>
@@ -113,10 +137,12 @@ export default function Application() {
             backgroundRepeat: 'unset',
           }}
         >
-          <audio src={audioSrc} ref={audio} loop={loop} autoPlay></audio>
-          {/* <Box sx={{ position: 'absolute', zIndex: 2 }}>
-        <input type="file" onChange={handler} accept="audio/*" multiple />
-      </Box> */}
+          <audio
+            src={audioSrc}
+            ref={audio}
+            loop={loop}
+            autoPlay
+          ></audio>
 
           <MusicPlayerSlider
             genre={genre}
