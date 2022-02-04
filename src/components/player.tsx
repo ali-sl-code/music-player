@@ -29,6 +29,8 @@ export default function MusicPlayerSlider({
   genre,
   audio,
   switchSong,
+  loop,
+  setLoop,
 }) {
   const theme = useTheme()
   const [duration, setDuration] = React.useState(200) // seconds
@@ -121,8 +123,6 @@ export default function MusicPlayerSlider({
           max={duration}
           onChange={(_, value) => {
             setPosition(+value)
-            console.log(`🟢Loged 👉 value`, value)
-            console.log(`🟢Loged 👉 +value`, +value)
             //* Handle music currentTime
             audio.current.currentTime = +value
           }}
@@ -134,7 +134,9 @@ export default function MusicPlayerSlider({
           sx={{ mt: '-2' }}
         >
           <TinyText>{formatDuration(Math.floor(position))}</TinyText>
-          <TinyText>-{formatDuration(Math.floor(duration) - Math.floor(position))}</TinyText>
+          <TinyText>
+            -{formatDuration(Math.floor(duration) - Math.floor(position))}
+          </TinyText>
         </Stack>
         <Stack
           direction="row"
@@ -148,7 +150,10 @@ export default function MusicPlayerSlider({
             <IconButton>
               <SpeedIcon />
             </IconButton>
-            <IconButton>
+            <IconButton
+              onClick={() => setLoop(preLoop => !preLoop)}
+              color={loop ? 'primary' : 'default'}
+            >
               <RepeatIcon />
             </IconButton>
           </Box>

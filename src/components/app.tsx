@@ -31,6 +31,7 @@ export default function Application() {
   const [audioSrc, setAudioSrc] = useState()
   const [metaData, setMetaData] = useState(null)
   const [files, setFiles] = useState({})
+  const [loop, setLoop] = useState(false)
 
   const { isAuthenticated } = useAuth0()
 
@@ -112,7 +113,7 @@ export default function Application() {
             backgroundRepeat: 'unset',
           }}
         >
-          <audio src={audioSrc} ref={audio} autoPlay></audio>
+          <audio src={audioSrc} ref={audio} loop={loop} autoPlay></audio>
           {/* <Box sx={{ position: 'absolute', zIndex: 2 }}>
         <input type="file" onChange={handler} accept="audio/*" multiple />
       </Box> */}
@@ -124,6 +125,8 @@ export default function Application() {
             poster={imageSrc}
             audio={audio}
             switchSong={musicControlDispatch}
+            loop={loop}
+            setLoop={setLoop}
           />
           <Box>
             <div id="inputFileContainer">
