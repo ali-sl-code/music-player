@@ -1,15 +1,17 @@
 import { Slider } from '@mui/material'
-import { styled} from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 export const WallPaper = styled('div')({
   position: 'absolute',
   width: '100%',
-  height: '200%',
+  height: '100%',
   top: 0,
   left: 0,
   overflow: 'hidden',
-  background: 'rgb(51, 16, 49)',
+  backdropFilter: 'blur(6px)!important',
+  // zIndex:99,
+  // backgroundImage:`url(${IMG1})`,
   transition: 'all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s',
   '&:before': {
     content: '""',
@@ -18,7 +20,8 @@ export const WallPaper = styled('div')({
     position: 'absolute',
     top: '-40%',
     right: '-50%',
-    background: 'rgb(51, 16, 49)',
+
+    // backgroundImage:`url(${IMG1})`,
   },
   '&:after': {
     content: '""',
@@ -27,11 +30,10 @@ export const WallPaper = styled('div')({
     position: 'absolute',
     bottom: '-50%',
     left: '-30%',
-    background: 'rgb(51, 16, 49)',
+    // backgroundImage:`url(${IMG1})`,
     transform: 'rotate(30deg)',
   },
 })
-
 
 export const Widget = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -44,7 +46,7 @@ export const Widget = styled('div')(({ theme }) => ({
   borderRadius: 16,
   width: '45vw',
 
-  height: 600,
+  height: 640,
   maxWidth: '100%',
   margin: 'auto',
   position: 'relative',
@@ -54,13 +56,12 @@ export const Widget = styled('div')(({ theme }) => ({
   backdropFilter: 'blur(40px)',
 }))
 
-
 export const CoverImage = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     width: '80vw',
   },
   width: '45vw',
-  height: 400,
+  height: 450,
   objectFit: 'cover',
   overflow: 'hidden',
   flexShrink: 0,
@@ -71,15 +72,12 @@ export const CoverImage = styled('div')(({ theme }) => ({
   },
 }))
 
-
-
 export const TinyText = styled(Typography)({
   fontSize: '0.75rem',
   opacity: 0.38,
   fontWeight: 500,
   letterSpacing: 0.2,
 })
-
 
 export const TimeIndicator = styled(Slider)(({ theme }) => ({
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
@@ -107,8 +105,6 @@ export const TimeIndicator = styled(Slider)(({ theme }) => ({
     opacity: 0.28,
   },
 }))
-
-
 
 export const VolumeIndicator = styled(Slider)(({ theme }) => ({
   width: 90,

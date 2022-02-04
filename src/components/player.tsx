@@ -10,6 +10,8 @@ import FastForwardRounded from '@mui/icons-material/FastForwardRounded'
 import FastRewindRounded from '@mui/icons-material/FastRewindRounded'
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
+import SpeedIcon from '@mui/icons-material/Speed'
+import RepeatIcon from '@mui/icons-material/Repeat'
 import DefaultImage from '../img/default_image.jpg'
 import {
   WallPaper,
@@ -29,7 +31,7 @@ export default function MusicPlayerSlider({
   switchSong,
 }) {
   const theme = useTheme()
-  const [duration, setDuration] = React.useState(0) // seconds
+  const [duration, setDuration] = React.useState(200) // seconds
   const [position, setPosition] = React.useState(0)
   const [paused, setPaused] = React.useState(true)
   const [volume, setVolume] = React.useState(30)
@@ -43,9 +45,9 @@ export default function MusicPlayerSlider({
 
   //* Set music duration
   React.useEffect(() => {
-    if (audio.current != null) {
+    if (audio.current !== null) {
       audio.current.addEventListener('loadedmetadata', e => {
-        setDuration(e.target.duration)
+        setDuration(Math.floor(e.target.duration))
         setPaused(false)
       })
 
@@ -60,8 +62,8 @@ export default function MusicPlayerSlider({
 
     return () => {
       audio.current.removeEventListener('loadedmetadata', e => {
-        setDuration(e.target.duration)
-        setPaused(true)
+        setDuration(Math.floor(e.target.duration))
+        setPaused(false)
       })
 
       audio.current.removeEventListener('timeupdate', event => {
@@ -88,13 +90,13 @@ export default function MusicPlayerSlider({
               <img
                 alt="can't win - Chilling Sunday"
                 src={poster}
-                height={400}
+                height={450}
               />
             ) : (
               <img
                 alt="can't win - Chilling Sunday"
                 src={DefaultImage}
-                height={400}
+                height={450}
               />
             )}
           </CoverImage>
@@ -119,6 +121,8 @@ export default function MusicPlayerSlider({
           max={duration}
           onChange={(_, value) => {
             setPosition(+value)
+            console.log(`🟢Loged 👉 value`, value)
+            console.log(`🟢Loged 👉 +value`, +value)
             //* Handle music currentTime
             audio.current.currentTime = +value
           }}
@@ -130,59 +134,67 @@ export default function MusicPlayerSlider({
           sx={{ mt: '-2' }}
         >
           <TinyText>{formatDuration(Math.floor(position))}</TinyText>
-          <TinyText>
-            -{formatDuration(Math.floor(duration) - Math.floor(position))}
-          </TinyText>
+          <TinyText>-{formatDuration(Math.floor(duration) - Math.floor(position))}</TinyText>
         </Stack>
         <Stack
           direction="row"
           alignItems="center"
-          justifyContent="center"
+          justifyContent="space-between"
           sx={{
             mt: -1,
           }}
         >
-          <IconButton
-            aria-label="previous song"
-            onClick={() => {
-              switchSong({ type: "PREV" })
-            }}
-          >
-            <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
-          </IconButton>
-          <IconButton
-            aria-label={paused ? 'play' : 'pause'}
-            onClick={() =>
-              setPaused(prePaused => {
-                if (audio.current.src != '') {
-                  //* Handle music play and pause
-                  paused ? audio.current.play() : audio.current.pause()
-                  return !prePaused
-                }
-                return prePaused
-              })
-            }
-          >
-            {!paused ? (
-              <PauseRounded
-                sx={{ fontSize: '3rem' }}
-                htmlColor={mainIconColor}
-              />
-            ) : (
-              <PlayArrowRounded
-                sx={{ fontSize: '3rem' }}
-                htmlColor={mainIconColor}
-              />
-            )}
-          </IconButton>
-          <IconButton
-            aria-label="next song"
-            onClick={() => {
-              switchSong({ type: "NEXT" })
-            }}
-          >
-            <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
-          </IconButton>
+          <Box>
+            <IconButton>
+              <SpeedIcon />
+            </IconButton>
+            <IconButton>
+              <RepeatIcon />
+            </IconButton>
+          </Box>
+          <Box mr={12}>
+            <IconButton
+              aria-label="previous song"
+              onClick={() => {
+                switchSong({ type: 'PREV' })
+              }}
+            >
+              <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
+            </IconButton>
+            <IconButton
+              aria-label={paused ? 'play' : 'pause'}
+              onClick={() =>
+                setPaused(prePaused => {
+                  if (audio.current.src != '') {
+                    //* Handle music play and pause
+                    paused ? audio.current.play() : audio.current.pause()
+                    return !prePaused
+                  }
+                  return prePaused
+                })
+              }
+            >
+              {paused ? (
+                <PlayArrowRounded
+                  sx={{ fontSize: '3rem' }}
+                  htmlColor={mainIconColor}
+                />
+              ) : (
+                <PauseRounded
+                  sx={{ fontSize: '3rem' }}
+                  htmlColor={mainIconColor}
+                />
+              )}
+            </IconButton>
+            <IconButton
+              aria-label="next song"
+              onClick={() => {
+                switchSong({ type: 'NEXT' })
+              }}
+            >
+              <FastForwardRounded fontSize="large" htmlColor={mainIconColor} />
+            </IconButton>
+          </Box>
           <Stack
             // width='15vw'
             // position='absolute'
