@@ -37,6 +37,7 @@ export default function MusicPlayerSlider({
   const [position, setPosition] = React.useState(0)
   const [paused, setPaused] = React.useState(true)
   const [volume, setVolume] = React.useState(30)
+  const [faster, setFaster] = React.useState(false)
 
   //* Duration display
   function formatDuration(value: number) {
@@ -72,7 +73,7 @@ export default function MusicPlayerSlider({
         setPosition(event.path[0].currentTime)
       })
     }
-  }, [audio.current])
+  }, [])
 
   //* Handle music volume
   React.useEffect(() => {
@@ -147,7 +148,17 @@ export default function MusicPlayerSlider({
           }}
         >
           <Box>
-            <IconButton>
+            <IconButton
+              onClick={() =>
+                setFaster(preFaster => {
+                  preFaster
+                    ? (audio.current.playbackRate = 1)
+                    : (audio.current.playbackRate = 2)
+                  return !preFaster
+                })
+              }
+              color={faster ? 'primary' : 'default'}
+            >
               <SpeedIcon />
             </IconButton>
             <IconButton
