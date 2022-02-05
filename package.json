@@ -27,6 +27,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-picture-in-picture": "^1.0.0",
+    "resize-base64": "^1.0.12",
     "typescript": "latest"
   },
   "_moduleAliases": {

@@ -13,7 +13,6 @@ ReactDOM.render(
     clientId={clientId}
     redirectUri={window.location.origin}
   >
-    {/* <StyledEngineProvider injectFirst></StyledEngineProvider> */}
     <App />
   </Auth0Provider>,
   document.querySelector('#root'),

@@ -26,6 +26,7 @@ export default function Application() {
   const [title, setTitle] = useState()
   const [artist, setArtist] = useState()
   const [genre, setGenre] = useState()
+  const [artwork, setArtwork] = useState()
   const [audioID, setAudioID] = useState(0)
   const [audioList, setAudioList] = useState([])
   const [audioSrc, setAudioSrc] = useState()
@@ -100,6 +101,7 @@ export default function Application() {
     metaData.getTitle().then(setTitle)
     metaData.getArtist().then(setArtist)
     metaData.getGenre().then(setGenre)
+    metaData.getArtwork().then(setArtwork)
     metaData.getAudioSrc().then(setAudioSrc)
   }, [metaData])
 
@@ -126,6 +128,17 @@ export default function Application() {
       })
     }
   }, [])
+
+  useEffect(() => {
+    if ('mediaSession' in navigator && title && artist && genre && artwork) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title,
+        artist,
+        album: genre,
+        artwork,
+      })
+    }
+  }, [artwork])
 
   return (
     isAuthenticated && (

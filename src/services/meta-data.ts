@@ -1,5 +1,6 @@
 import { parseBlob, selectCover } from 'music-metadata-browser'
 import { encode } from 'base64-arraybuffer'
+import resize from 'resize-base64'
 
 const getImgBase64Src = (base64String: string) =>
   `data:image/jpg;base64, ${base64String}`
@@ -67,5 +68,16 @@ export default class MetaData {
 
   async getAudioSrc() {
     return URL.createObjectURL(this.file)
+  }
+
+  async getArtwork() {
+    let sizes: number[] = [96, 128, 192, 256, 384, 512]
+    let dataImage = await this.getImageSrc()
+    const artwork = sizes.map(value => ({
+      src: resize(dataImage, value, value),
+      sizes: `${value}x${value}`,
+      type: 'image/jpeg',
+    }))
+    return artwork
   }
 }
