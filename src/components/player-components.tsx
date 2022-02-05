@@ -1,5 +1,5 @@
 import { Slider } from '@mui/material'
-import { styled} from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import IMG1 from '../img/c870x524.jpg'
 export const WallPaper = styled('div')({
@@ -9,7 +9,7 @@ export const WallPaper = styled('div')({
   top: 0,
   left: 0,
   overflow: 'hidden',
-  backdropFilter:'blur(6px)!important',
+  backdropFilter: 'blur(6px)!important',
   // zIndex:99,
   // backgroundImage:`url(${IMG1})`,
   transition: 'all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s',
@@ -20,7 +20,7 @@ export const WallPaper = styled('div')({
     position: 'absolute',
     top: '-40%',
     right: '-50%',
-    
+
     // backgroundImage:`url(${IMG1})`,
   },
   '&:after': {
@@ -35,7 +35,6 @@ export const WallPaper = styled('div')({
   },
 })
 
-
 export const Widget = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     width: '80vw',
@@ -46,7 +45,7 @@ export const Widget = styled('div')(({ theme }) => ({
   padding: 16,
   borderRadius: 16,
   width: '45vw',
- 
+
   height: 640,
   maxWidth: '100%',
   margin: 'auto',
@@ -56,7 +55,6 @@ export const Widget = styled('div')(({ theme }) => ({
     theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)',
   backdropFilter: 'blur(40px)',
 }))
-
 
 export const CoverImage = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -74,15 +72,12 @@ export const CoverImage = styled('div')(({ theme }) => ({
   },
 }))
 
-
-
 export const TinyText = styled(Typography)({
   fontSize: '0.75rem',
   opacity: 0.38,
   fontWeight: 500,
   letterSpacing: 0.2,
 })
-
 
 export const TimeIndicator = styled(Slider)(({ theme }) => ({
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
@@ -110,8 +105,6 @@ export const TimeIndicator = styled(Slider)(({ theme }) => ({
     opacity: 0.28,
   },
 }))
-
-
 
 export const VolumeIndicator = styled(Slider)(({ theme }) => ({
   width: 90,

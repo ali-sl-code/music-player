@@ -27,6 +27,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-picture-in-picture": "^1.0.0",
+    "react-router-dom": "^6.2.1",
     "typescript": "latest"
   },
   "_moduleAliases": {

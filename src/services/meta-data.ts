@@ -34,7 +34,7 @@ export default class MetaData {
       await this.initiateMusicMetaDataBlob()
       const { common } = this.parsedBlob
       return common.title ? common.title : 'Music name is undefined'
-    } catch {}
+    } catch { }
   }
 
   async getGenre() {
@@ -43,7 +43,7 @@ export default class MetaData {
       const { common } = this.parsedBlob
       const genre = common.genre || common.label
       return genre.join`, `
-    } catch {}
+    } catch { }
   }
 
   async getArtist() {
@@ -62,7 +62,7 @@ export default class MetaData {
     try {
       await this.initiateMusicMetaDataBlob()
       console.log(this.parsedBlob)
-    } catch {}
+    } catch { }
   }
 
   async getAudioSrc() {

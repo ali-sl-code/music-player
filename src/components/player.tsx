@@ -14,7 +14,6 @@ import SpeedIcon from '@mui/icons-material/Speed'
 import RepeatIcon from '@mui/icons-material/Repeat'
 import IMG1 from '../img/c870x524.jpg'
 
-
 import {
   WallPaper,
   Widget,
@@ -50,11 +49,11 @@ export default function MusicPlayerSlider({
         setDuration(Math.floor(e.target.duration))
       })
 
-    return () => {
-      audio.current.removeEventListener('loadedmetadata', () => {
-        console.log('loadedmetadata removed')
-      })
-    }
+    // return () => {
+    //   audio.current.removeEventListener('loadedmetadata', () => {
+    //     console.log('loadedmetadata removed')
+    //   })
+    // }
   }, [audio.current])
 
   //* Handle music volume
@@ -73,9 +72,7 @@ export default function MusicPlayerSlider({
 
   return (
     <Box sx={{ width: '100%', overflow: 'hidden' }}>
-
       <Widget>
-     
         <Stack direction="row" alignItems="center">
           <CoverImage>
             {poster ? (
@@ -189,11 +186,8 @@ export default function MusicPlayerSlider({
               htmlColor={lightIconColor}
               sx={{ position: 'absolute', right: 3 }}
             />
-           
           </Stack>
-          
         </Stack>
-        
       </Widget>
       <WallPaper />
     </Box>
