@@ -12,7 +12,9 @@ import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
 import SpeedIcon from '@mui/icons-material/Speed'
 import RepeatIcon from '@mui/icons-material/Repeat'
+import PictureInPictureAltIcon from '@mui/icons-material/PictureInPictureAlt'
 import DefaultImage from '../img/default_image.jpg'
+import showPictureInPictureWindow from '../utils/pictureInPicture'
 import {
   WallPaper,
   Widget,
@@ -38,6 +40,7 @@ export default function MusicPlayerSlider({
   const [paused, setPaused] = React.useState(true)
   const [volume, setVolume] = React.useState(30)
   const [faster, setFaster] = React.useState(false)
+  const [pictureInPictureMode, setPictureInPictureMode] = React.useState(false)
 
   //* Duration display
   function formatDuration(value: number) {
@@ -166,6 +169,15 @@ export default function MusicPlayerSlider({
               color={loop ? 'primary' : 'default'}
             >
               <RepeatIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                showPictureInPictureWindow(!pictureInPictureMode)
+                setPictureInPictureMode(preMode => !preMode)
+              }}
+              color={pictureInPictureMode ? 'primary' : 'default'}
+            >
+              <PictureInPictureAltIcon />
             </IconButton>
           </Box>
           <Box mr={12}>
