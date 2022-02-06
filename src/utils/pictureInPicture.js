@@ -15,6 +15,8 @@ export default async function showPictureInPictureWindow(visible) {
     await video.play()
     await video.requestPictureInPicture()
   } else {
-    await document.exitPictureInPicture()
+    try {
+      await document.exitPictureInPicture()
+    } catch {}
   }
 }
