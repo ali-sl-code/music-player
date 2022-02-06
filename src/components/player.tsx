@@ -25,24 +25,33 @@ import {
 } from './player-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { setDuration } from './../slices/audioDataSlice'
+import {
+  setLoop,
+  setPosition,
+  setPaused,
+  setVolume,
+  setFaster,
+  setPictureInPictureMode,
+} from './../slices/audioControlSlice'
 import { RootState } from './../store'
 
 export default function MusicPlayerSlider({
   audio,
-  switchSong,
-  loop,
-  setLoop,
+  switchSong
 }) {
+  const theme = useTheme()
+
   const dispatch = useDispatch()
   const audioState = useSelector((state: RootState) => state.audio)
   // const [duration, setDuration] = React.useState(200) // seconds
 
-  const theme = useTheme()
-  const [position, setPosition] = React.useState(0)
-  const [paused, setPaused] = React.useState(true)
-  const [volume, setVolume] = React.useState(30)
-  const [faster, setFaster] = React.useState(false)
-  const [pictureInPictureMode, setPictureInPictureMode] = React.useState(false)
+  const audioControlState = useSelector((state: RootState) => state.audioControl)
+  // const [position, setPosition] = React.useState(0)
+  // const [paused, setPaused] = React.useState(true)
+  // const [volume, setVolume] = React.useState(30)
+  // const [faster, setFaster] = React.useState(false)
+  // const [pictureInPictureMode, setPictureInPictureMode] = React.useState(false)
+
 
   //* Duration display
   function formatDuration(value: number) {
@@ -57,13 +66,13 @@ export default function MusicPlayerSlider({
       audio.current.addEventListener('loadedmetadata', e => {
         dispatch(setDuration(Math.floor(e.target.duration)))
         // setDuration(Math.floor(e.target.duration))
-        setPaused(false)
+        dispatch(setPaused(false))
       })
 
       audio.current.addEventListener(
         'timeupdate',
         event => {
-          setPosition(event.path[0].currentTime)
+          dispatch(setPosition(event.path[0].currentTime))
         },
         false,
       )
@@ -73,19 +82,19 @@ export default function MusicPlayerSlider({
       audio.current.removeEventListener('loadedmetadata', e => {
         dispatch(setDuration(Math.floor(e.target.duration)))
         // setDuration(Math.floor(e.target.duration))
-        setPaused(false)
+        dispatch(setPaused(false))
       })
 
       audio.current.removeEventListener('timeupdate', event => {
-        setPosition(event.path[0].currentTime)
+        dispatch(setPosition(event.path[0].currentTime))
       })
     }
   }, [])
 
   //* Handle music volume
   React.useEffect(() => {
-    if (audio.current != null) audio.current.volume = volume / 100
-  }, [volume])
+    if (audio.current != null) audio.current.volume = audioControlState.volume / 100
+  }, [audioControlState.volume])
 
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000'
   const lightIconColor =
@@ -125,12 +134,12 @@ export default function MusicPlayerSlider({
         <TimeIndicator
           aria-label="time-indicator"
           size="small"
-          value={position}
+          value={audioControlState.position}
           min={0}
           step={1}
           max={audioState.duration}
           onChange={(_, value) => {
-            setPosition(+value)
+            dispatch(setPosition(+value))
             //* Handle music currentTime
             audio.current.currentTime = +value
           }}
@@ -141,11 +150,11 @@ export default function MusicPlayerSlider({
           justifyContent="space-between"
           sx={{ mt: '-2' }}
         >
-          <TinyText>{formatDuration(Math.floor(position))}</TinyText>
+          <TinyText>{formatDuration(Math.floor(audioControlState.position))}</TinyText>
           <TinyText>
             -
             {formatDuration(
-              Math.floor(audioState.duration) - Math.floor(position),
+              Math.floor(audioState.duration) - Math.floor(audioControlState.position),
             )}
           </TinyText>
         </Stack>
@@ -159,30 +168,28 @@ export default function MusicPlayerSlider({
         >
           <Box>
             <IconButton
-              onClick={() =>
-                setFaster(preFaster => {
-                  preFaster
-                    ? (audio.current.playbackRate = 1)
-                    : (audio.current.playbackRate = 2)
-                  return !preFaster
-                })
-              }
-              color={faster ? 'primary' : 'default'}
+              onClick={() => {
+                dispatch(setFaster(!audioControlState.faster))
+                audioControlState.faster
+                  ? (audio.current.playbackRate = 1)
+                  : (audio.current.playbackRate = 2)
+              }}
+              color={audioControlState.faster ? 'primary' : 'default'}
             >
               <SpeedIcon />
             </IconButton>
             <IconButton
-              onClick={() => setLoop(preLoop => !preLoop)}
-              color={loop ? 'primary' : 'default'}
+              onClick={() => {dispatch(setLoop(!audioControlState.loop))}}
+              color={audioControlState.loop ? 'primary' : 'default'}
             >
               <RepeatIcon />
             </IconButton>
             <IconButton
               onClick={() => {
-                showPictureInPictureWindow(!pictureInPictureMode)
-                setPictureInPictureMode(preMode => !preMode)
+                showPictureInPictureWindow(!audioControlState.pictureInPictureMode)
+                dispatch(setPictureInPictureMode(!audioControlState.pictureInPictureMode))
               }}
-              color={pictureInPictureMode ? 'primary' : 'default'}
+              color={audioControlState.pictureInPictureMode ? 'primary' : 'default'}
             >
               <PictureInPictureAltIcon />
             </IconButton>
@@ -197,19 +204,16 @@ export default function MusicPlayerSlider({
               <FastRewindRounded fontSize="large" htmlColor={mainIconColor} />
             </IconButton>
             <IconButton
-              aria-label={paused ? 'play' : 'pause'}
-              onClick={() =>
-                setPaused(prePaused => {
-                  if (audio.current.src != '') {
-                    //* Handle music play and pause
-                    paused ? audio.current.play() : audio.current.pause()
-                    return !prePaused
-                  }
-                  return prePaused
-                })
-              }
+              aria-label={audioControlState.paused ? 'play' : 'pause'}
+              onClick={() => {
+                if (audio.current.src != '') {
+                  dispatch(setPaused(!audioControlState.paused))
+                  //* Handle music play and pause
+                  audioControlState.paused ? audio.current.play() : audio.current.pause()
+                }
+              }}
             >
-              {paused ? (
+              {audioControlState.paused ? (
                 <PlayArrowRounded
                   sx={{ fontSize: '3rem' }}
                   htmlColor={mainIconColor}
@@ -245,9 +249,9 @@ export default function MusicPlayerSlider({
             />
             <VolumeIndicator
               aria-label="Volume"
-              value={volume}
+              value={audioControlState.volume}
               onChange={(e: any) => {
-                setVolume(e.target.value)
+                dispatch(setVolume(e.target.value))
               }}
             />
             <VolumeUpRounded

@@ -42,11 +42,13 @@ export default function Application() {
   // const [artwork, setArtwork] = useState()
   // const [imageSrc, setImageSrc] = useState()
 
+  const audioControlState = useSelector((state: RootState) => state.audioControl)
+  // const [loop, setLoop] = useState(false)
+
   const [audioID, setAudioID] = useState(0)
   const [audioList, setAudioList] = useState([])
   const [metaData, setMetaData] = useState(null)
   const [files, setFiles] = useState({})
-  const [loop, setLoop] = useState(false)
 
   // const { isAuthenticated } = useAuth0()
 
@@ -128,7 +130,7 @@ export default function Application() {
   useEffect(() => {
     if (audio.current !== null) {
       audio.current.addEventListener('ended', () => {
-        if (!loop) {
+        if (!audioControlState.loop) {
           // @ts-ignore
           if (files.length - 1 != audioID) {
             metaDataHandler(audioID + 1)
@@ -139,7 +141,7 @@ export default function Application() {
 
     return () => {
       audio.current.removeEventListener('ended', () => {
-        if (!loop) {
+        if (!audioControlState.loop) {
           // @ts-ignore
           if (files.length - 1 != audioID) {
             metaDataHandler(audioID + 1)
@@ -179,15 +181,13 @@ export default function Application() {
         <audio
           src={audioState.audioSrc}
           ref={audio}
-          loop={loop}
+          loop={audioControlState.loop}
           autoPlay
         ></audio>
 
         <MusicPlayerSlider
           audio={audio}
           switchSong={musicControlDispatch}
-          loop={loop}
-          setLoop={setLoop}
         />
         <Box>
           <InputFileContainer>
