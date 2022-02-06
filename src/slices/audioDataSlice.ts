@@ -1,35 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface AudioState {
-  title: string,
-  artist: string,
-  genre: string,
+  title: string | null,
+  artist: string | null,
+  genre: string | null,
   artwork: [
     {
-      src: string,
-      sizes: string,
-      type: string,
+      src: string | null,
+      sizes: string | null,
+      type: string | null,
     },
   ],
-  imageSrc: string,
-  audioSrc: string,
-  duration: number
+  imageSrc: string | null,
+  audioSrc: string | null,
+  duration: number | null,
 }
 
 export const initialState: AudioState = {
-  title: '',
-  artist: '',
-  genre: '',
+  title: null,
+  artist: null,
+  genre: null,
   artwork: [
     {
-      src: '',
-      sizes: '',
-      type: '',
+      src: null,
+      sizes: null,
+      type: null,
     },
   ],
-  imageSrc: '',
-  audioSrc: '',
-  duration: 200
+  imageSrc: null,
+  audioSrc: null,
+  duration: 200,
 }
 
 export const audioData = createSlice({
@@ -67,7 +67,7 @@ export const {
   setImageSrc,
   setAudioSrc,
   setArtwork,
-  setDuration
+  setDuration,
 } = audioData.actions
 
 export default audioData.reducer

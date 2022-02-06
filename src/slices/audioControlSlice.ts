@@ -1,24 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface AudioState {
-    loop: boolean,
-    position: number,
-    paused: boolean,
-    volume: number,
-    faster: boolean,
-    pictureInPictureMode: boolean
+  loop: boolean,
+  position: number,
+  paused: boolean,
+  volume: number,
+  faster: boolean,
+  pictureInPictureMode: boolean
 }
 
 export const initialState: AudioState = {
-    loop: false,
-    position: 0,
-    paused: true,
-    volume: 30,
-    faster: false,
-    pictureInPictureMode: false
+  loop: false,
+  position: 0,
+  paused: true,
+  volume: 30,
+  faster: false,
+  pictureInPictureMode: false,
 }
 
-export const audioData = createSlice({
+export const audioControlSlice = createSlice({
   name: 'audio',
   initialState,
   reducers: {
@@ -37,7 +37,10 @@ export const audioData = createSlice({
     setFaster: (state, action: PayloadAction<AudioState['faster']>) => {
       state.faster = action.payload
     },
-    setPictureInPictureMode: (state, action: PayloadAction<AudioState['pictureInPictureMode']>) => {
+    setPictureInPictureMode: (
+      state,
+      action: PayloadAction<AudioState['pictureInPictureMode']>,
+    ) => {
       state.pictureInPictureMode = action.payload
     },
   },
@@ -50,6 +53,6 @@ export const {
   setVolume,
   setFaster,
   setPictureInPictureMode,
-} = audioData.actions
+} = audioControlSlice.actions
 
-export default audioData.reducer
+export default audioControlSlice.reducer

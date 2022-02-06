@@ -9,7 +9,7 @@ import {
   setAudioSrc,
   setArtwork,
 } from './../slices/audioDataSlice'
-import MetaData from '../services/meta-data'
+import MetaData from './../services/meta-data'
 import getFileList from './../utils/getFileList'
 import MusicPlayerSlider from './player'
 // import { useAuth0 } from '@auth0/auth0-react'
@@ -34,6 +34,7 @@ export default function Application() {
   const audio = useRef(null)
   const dispatch = useDispatch()
 
+
   const audioState = useSelector((state: RootState) => state.audio)
   // const [title, setTitle] = useState()
   // const [artist, setArtist] = useState()
@@ -42,13 +43,16 @@ export default function Application() {
   // const [artwork, setArtwork] = useState()
   // const [imageSrc, setImageSrc] = useState()
 
-  const audioControlState = useSelector((state: RootState) => state.audioControl)
+  const audioControlState = useSelector(
+    (state: RootState) => state.audioControl,
+  )
   // const [loop, setLoop] = useState(false)
+
+  const [metaData, setMetaData] = useState(null)
+  const [files, setFiles] = useState({})
 
   const [audioID, setAudioID] = useState(0)
   const [audioList, setAudioList] = useState([])
-  const [metaData, setMetaData] = useState(null)
-  const [files, setFiles] = useState({})
 
   // const { isAuthenticated } = useAuth0()
 
@@ -185,10 +189,7 @@ export default function Application() {
           autoPlay
         ></audio>
 
-        <MusicPlayerSlider
-          audio={audio}
-          switchSong={musicControlDispatch}
-        />
+        <MusicPlayerSlider audio={audio} switchSong={musicControlDispatch} />
         <Box>
           <InputFileContainer>
             <input
