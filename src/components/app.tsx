@@ -141,7 +141,7 @@ export default function Application() {
   }, [artwork])
 
   return (
-    isAuthenticated && (
+    // isAuthenticated && (
       <Box sx={{ backdropFilter: 'blur(2px)!important' }}>
         <Stack
           style={{
@@ -182,7 +182,6 @@ export default function Application() {
               </label>
               <Logout />
             </div>
-            {/* <input type="file" onChange={handler} /> */}
           </Box>
 
           <List sx={{ marginTop: '20px', marginInline: '5px' }}>
@@ -210,6 +209,6 @@ export default function Application() {
           </List>
         </Stack>
       </Box>
-    )
+    // )
   )
 }
