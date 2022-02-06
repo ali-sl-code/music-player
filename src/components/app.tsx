@@ -9,6 +9,10 @@ import {
   setAudioSrc,
   setArtwork,
 } from './../slices/audioDataSlice'
+import {
+  playingAudio as setAudioID,
+  setAudioList,
+} from './../slices/audioListSlice'
 import MetaData from './../services/meta-data'
 import getFileList from './../utils/getFileList'
 import MusicPlayerSlider from './player'
@@ -34,7 +38,6 @@ export default function Application() {
   const audio = useRef(null)
   const dispatch = useDispatch()
 
-
   const audioState = useSelector((state: RootState) => state.audio)
   // const [title, setTitle] = useState()
   // const [artist, setArtist] = useState()
@@ -51,18 +54,27 @@ export default function Application() {
   const [metaData, setMetaData] = useState(null)
   const [files, setFiles] = useState({})
 
-  const [audioID, setAudioID] = useState(0)
-  const [audioList, setAudioList] = useState([])
+  const audioListState = useSelector((state: RootState) => state.audioList)
+  // const [audioID, setAudioID] = useState(0)
+  // const [audioList, setAudioList] = useState([])
 
   // const { isAuthenticated } = useAuth0()
 
   function musicControlReducer(state: State, action: Action) {
     switch (action.type) {
       case 'NEXT':
-        return { ...state, status: 'NEXT', id: audioID + 1 }
+        return {
+          ...state,
+          status: 'NEXT',
+          id: audioListState.playingAudioId + 1,
+        }
         break
       case 'PREV':
-        return { ...state, status: 'PREV', id: audioID - 1 }
+        return {
+          ...state,
+          status: 'PREV',
+          id: audioListState.playingAudioId - 1,
+        }
         break
       default:
         return state
@@ -78,15 +90,15 @@ export default function Application() {
     if (files) {
       if (musicControl.status == 'NEXT') {
         // @ts-ignore
-        if (files.length - 1 != audioID) {
-          metaDataHandler(audioID + 1)
+        if (files.length - 1 != audioListState.playingAudioId) {
+          metaDataHandler(audioListState.playingAudioId + 1)
         } else {
           metaDataHandler(0)
         }
       } else if (musicControl.status == 'PREV') {
         // @ts-ignore
-        if (audioID != 0) {
-          metaDataHandler(audioID - 1)
+        if (audioListState.playingAudioId != 0) {
+          metaDataHandler(audioListState.playingAudioId - 1)
         } else {
           // @ts-ignore
           metaDataHandler(files.length - 1)
@@ -97,9 +109,10 @@ export default function Application() {
 
   const fileHandler = useCallback(async e => {
     if (e.target.files.length) {
-      setAudioList(getFileList(e))
+      // @ts-ignore
+      dispatch(setAudioList(getFileList(e)))
       setFiles(e.target.files)
-      setAudioID(0)
+      dispatch(setAudioID(0))
       setMetaData(new MetaData(e.target.files[0]))
     }
   }, [])
@@ -108,7 +121,7 @@ export default function Application() {
     id => {
       if (files) {
         setMetaData(new MetaData(files[id]))
-        setAudioID(id)
+        dispatch(setAudioID(id))
       }
     },
     [files],
@@ -136,8 +149,8 @@ export default function Application() {
       audio.current.addEventListener('ended', () => {
         if (!audioControlState.loop) {
           // @ts-ignore
-          if (files.length - 1 != audioID) {
-            metaDataHandler(audioID + 1)
+          if (files.length - 1 != audioListState.playingAudioId) {
+            metaDataHandler(audioListState.playingAudioId + 1)
           }
         }
       })
@@ -147,8 +160,8 @@ export default function Application() {
       audio.current.removeEventListener('ended', () => {
         if (!audioControlState.loop) {
           // @ts-ignore
-          if (files.length - 1 != audioID) {
-            metaDataHandler(audioID + 1)
+          if (files.length - 1 != audioListState.playingAudioId) {
+            metaDataHandler(audioListState.playingAudioId + 1)
           }
         }
       })
@@ -209,7 +222,7 @@ export default function Application() {
 
         <List sx={{ marginTop: '20px', marginInline: '5px' }}>
           {files ? (
-            audioList.map(item => (
+            audioListState.audioList.map(item => (
               <ListItem
                 data-id={item.id}
                 key={item.id}
