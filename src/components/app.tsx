@@ -7,6 +7,8 @@ import MusicPlayerSlider from './player'
 // import Logout from 'components/logout'
 import { InputFileContainer } from './player-components'
 import default_image from './../img/default_image.jpg'
+import { color } from '@mui/system'
+import { MyBox , MyItem } from './player-components'
 
 // import './app-style.css'
 
@@ -143,16 +145,18 @@ export default function Application() {
 
   return (
     // isAuthenticated && (
-    <Box sx={{ backdropFilter: 'blur(2px)!important' }}>
+    <Box sx={{ backdropFilter: 'blur(2px)!important'}}>
       <Stack
         style={{
           backgroundImage: `url('${imageSrc || default_image}')`,
-          height: '200vh',
+          height: '300vh',
           backgroundRepeat: 'unset',
+          display:'flex'
         }}
       >
         <audio src={audioSrc} ref={audio} loop={loop} autoPlay></audio>
-
+<MyBox>
+  
         <MusicPlayerSlider
           genre={genre}
           title={title}
@@ -163,7 +167,39 @@ export default function Application() {
           loop={loop}
           setLoop={setLoop}
         />
-        <Box>
+        
+        <List sx={{ marginTop: '20px', marginInline: '0' }}>
+          {files ? (
+            audioList.map(item => (
+              <ListItem
+                data-id={item.id}
+                key={item.id}
+                sx={{
+                  '@media screen and (max-width:900px)': {
+                    marginLeft:'4px',
+                  },
+                  color: 'rgb(128, 76, 9)',
+                  borderTop: '1px solid gray',
+                  fontSize: 'large',
+                  width:'100%',
+                  marginLeft:'-18%',
+                  marginRight:'-60px',
+                  
+                }}
+                onClick={(e: any) => {
+                  metaDataHandler(e.target.getAttribute('data-id'))
+                }}
+                button
+              >
+                {item.name}
+              </ListItem>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </List>
+        </MyBox>
+        <Box sx={{marginTop:'100px'}}>
           <InputFileContainer>
             <input
               className="input-file"
@@ -180,29 +216,6 @@ export default function Application() {
           </InputFileContainer>
         </Box>
 
-        <List sx={{ marginTop: '20px', marginInline: '5px' }}>
-          {files ? (
-            audioList.map(item => (
-              <ListItem
-                data-id={item.id}
-                key={item.id}
-                sx={{
-                  color: 'wheat',
-                  borderTop: '1px solid gray',
-                  fontSize: 'large',
-                }}
-                onClick={(e: any) => {
-                  metaDataHandler(e.target.getAttribute('data-id'))
-                }}
-                button
-              >
-                {item.name}
-              </ListItem>
-            ))
-          ) : (
-            <p>Loading...</p>
-          )}
-        </List>
       </Stack>
     </Box>
     // )

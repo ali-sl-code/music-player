@@ -15,6 +15,7 @@ import RepeatIcon from '@mui/icons-material/Repeat'
 import PictureInPictureAltIcon from '@mui/icons-material/PictureInPictureAlt'
 import DefaultImage from '../img/default_image.jpg'
 import showPictureInPictureWindow from '../utils/pictureInPicture'
+import { Grid } from '@mui/material'
 import {
   WallPaper,
   Widget,
@@ -90,34 +91,28 @@ export default function MusicPlayerSlider({
   return (
     <Box sx={{ width: '100%', overflow: 'hidden' }}>
       <Widget>
-        <Stack direction="row" alignItems="center">
+        <Grid container alignItems="stretch" sx={{}} spacing={0}>
+          <Grid item xs={12} md={6}>
           <CoverImage>
             {poster ? (
               <img
                 alt="can't win - Chilling Sunday"
                 src={poster}
-                height={450}
+               
               />
             ) : (
               <img
                 alt="can't win - Chilling Sunday"
                 src={DefaultImage}
-                height={450}
+                
               />
             )}
           </CoverImage>
-        </Stack>
-        <Box sx={{ ml: 1.5, minWidth: 0 }}>
-          <Typography variant="caption" color="text.secondary" fontWeight={500}>
-            {genre}
-          </Typography>
-          <Typography noWrap>
-            <b>{title}</b>
-          </Typography>
-          <Typography noWrap letterSpacing={-0.25}>
-            {artist}
-          </Typography>
-        </Box>
+          </Grid>
+      
+        <Grid  item xs={12} md={6}>
+         
+        
         <TimeIndicator
           aria-label="time-indicator"
           size="small"
@@ -125,6 +120,7 @@ export default function MusicPlayerSlider({
           min={0}
           step={1}
           max={duration}
+          
           onChange={(_, value) => {
             setPosition(+value)
             //* Handle music currentTime
@@ -143,14 +139,14 @@ export default function MusicPlayerSlider({
           </TinyText>
         </Stack>
         <Stack
-          direction="row"
+          direction="column"
           alignItems="center"
           justifyContent="space-between"
           sx={{
             mt: -1,
           }}
         >
-          <Box>
+          <Box sx={{ textAlign: 'center' }}>
             <IconButton
               onClick={() =>
                 setFaster(preFaster => {
@@ -179,8 +175,7 @@ export default function MusicPlayerSlider({
             >
               <PictureInPictureAltIcon />
             </IconButton>
-          </Box>
-          <Box mr={12}>
+        
             <IconButton
               aria-label="previous song"
               onClick={() => {
@@ -234,7 +229,7 @@ export default function MusicPlayerSlider({
           >
             <VolumeDownRounded
               htmlColor={lightIconColor}
-              sx={{ position: 'absolute', right: 120 }}
+              // sx={{ position: 'absolute', right: 120 }}
             />
             <VolumeIndicator
               aria-label="Volume"
@@ -245,10 +240,20 @@ export default function MusicPlayerSlider({
             />
             <VolumeUpRounded
               htmlColor={lightIconColor}
-              sx={{ position: 'absolute', right: 3 }}
+              // sx={{ position: 'absolute', right: 3 }}
             />
           </Stack>
         </Stack>
+        <Typography sx={{marginLeft:'10px'}} variant="caption" color="text.secondary" fontWeight={500}>
+            {genre}
+          </Typography>
+          <Typography sx={{marginLeft:'10px'}} noWrap>
+            <b>{title}</b>
+          </Typography>
+          <Typography sx={{marginLeft:'10px'}} noWrap letterSpacing={-0.25}>
+            {artist}
+          </Typography>
+        </Grid>  </Grid>
       </Widget>
       <WallPaper />
     </Box>

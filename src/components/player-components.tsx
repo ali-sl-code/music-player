@@ -1,6 +1,7 @@
-import { Slider } from '@mui/material'
+import { ListItem, Slider } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+import { Box } from '@mui/system'
 
 export const WallPaper = styled('div')({
   position: 'absolute',
@@ -38,15 +39,12 @@ export const WallPaper = styled('div')({
 export const Widget = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     width: '80vw',
-
     marginTop: 50,
   },
-
   padding: 16,
   borderRadius: 16,
   width: '45vw',
 
-  height: 640,
   maxWidth: '100%',
   margin: 'auto',
   position: 'relative',
@@ -57,11 +55,7 @@ export const Widget = styled('div')(({ theme }) => ({
 }))
 
 export const CoverImage = styled('div')(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    width: '80vw',
-  },
-  width: '45vw',
-  height: 450,
+  width: '100%',
   objectFit: 'cover',
   overflow: 'hidden',
   flexShrink: 0,
@@ -69,20 +63,24 @@ export const CoverImage = styled('div')(({ theme }) => ({
   backgroundColor: 'rgba(0,0,0,0.08)',
   '& > img': {
     width: '100%',
+    
   },
 }))
-
 export const TinyText = styled(Typography)({
   fontSize: '0.75rem',
   opacity: 0.38,
   fontWeight: 500,
   letterSpacing: 0.2,
+  marginLeft:'10px',
+  marginTop:'30px'
 })
 
 export const TimeIndicator = styled(Slider)(({ theme }) => ({
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
   height: 4,
-  '& .MuiSlider-thumb': {
+  marginLeft:'10px',
+  marginTop:'40px',
+  '&.MuiSlider-thumb': {
     width: 8,
     height: 8,
     transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
@@ -108,8 +106,7 @@ export const TimeIndicator = styled(Slider)(({ theme }) => ({
 
 export const VolumeIndicator = styled(Slider)(({ theme }) => ({
   width: 90,
-  position: 'absolute',
-  right: 30,
+
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
   '& .MuiSlider-track': {
     border: 'none',
@@ -167,3 +164,30 @@ export const InputFileContainer = styled('div')({
     color: '#fff',
   }
 })
+
+export const MyBox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    display:'flex',
+   flexWrap:'wrap',
+  
+  },
+ 
+ display:'flex',
+ 
+
+}))
+export const MyItem = styled( ListItem )(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    marginLeft:'4px',
+  },
+ 
+  color: 'rgb(128, 76, 9)',
+                  borderTop: '1px solid gray',
+                  fontSize: 'large',
+                  width:'100%',
+                  marginLeft:'-18%',
+                  marginRight:'-60px',
+                  opacity:'3'
+ 
+
+}))
