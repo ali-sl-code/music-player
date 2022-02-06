@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 // import { useAuth0 } from '@auth0/auth0-react'
 import { Button, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/system'
-import IMGB from './img/AdobeStock_121177062.svg'
+import IMGB from './../img/sing.svg'
 
 const LoginButton = styled(Button)({
   fontSize: '2.3rem',
