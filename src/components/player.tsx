@@ -23,19 +23,21 @@ import {
   TimeIndicator,
   VolumeIndicator,
 } from './player-components'
+import { useSelector, useDispatch } from 'react-redux'
+import { setDuration } from './../slices/audioDataSlice'
+import { RootState } from './../store'
 
 export default function MusicPlayerSlider({
-  poster,
-  title,
-  artist,
-  genre,
   audio,
   switchSong,
   loop,
   setLoop,
 }) {
+  const dispatch = useDispatch()
+  const audioState = useSelector((state: RootState) => state.audio)
+  // const [duration, setDuration] = React.useState(200) // seconds
+
   const theme = useTheme()
-  const [duration, setDuration] = React.useState(200) // seconds
   const [position, setPosition] = React.useState(0)
   const [paused, setPaused] = React.useState(true)
   const [volume, setVolume] = React.useState(30)
@@ -53,7 +55,8 @@ export default function MusicPlayerSlider({
   React.useEffect(() => {
     if (audio.current !== null) {
       audio.current.addEventListener('loadedmetadata', e => {
-        setDuration(Math.floor(e.target.duration))
+        dispatch(setDuration(Math.floor(e.target.duration)))
+        // setDuration(Math.floor(e.target.duration))
         setPaused(false)
       })
 
@@ -68,7 +71,8 @@ export default function MusicPlayerSlider({
 
     return () => {
       audio.current.removeEventListener('loadedmetadata', e => {
-        setDuration(Math.floor(e.target.duration))
+        dispatch(setDuration(Math.floor(e.target.duration)))
+        // setDuration(Math.floor(e.target.duration))
         setPaused(false)
       })
 
@@ -92,10 +96,10 @@ export default function MusicPlayerSlider({
       <Widget>
         <Stack direction="row" alignItems="center">
           <CoverImage>
-            {poster ? (
+            {audioState.imageSrc ? (
               <img
                 alt="can't win - Chilling Sunday"
-                src={poster}
+                src={audioState.imageSrc}
                 height={450}
               />
             ) : (
@@ -109,13 +113,13 @@ export default function MusicPlayerSlider({
         </Stack>
         <Box sx={{ ml: 1.5, minWidth: 0 }}>
           <Typography variant="caption" color="text.secondary" fontWeight={500}>
-            {genre}
+            {audioState.genre}
           </Typography>
           <Typography noWrap>
-            <b>{title}</b>
+            <b>{audioState.title}</b>
           </Typography>
           <Typography noWrap letterSpacing={-0.25}>
-            {artist}
+            {audioState.artist}
           </Typography>
         </Box>
         <TimeIndicator
@@ -124,7 +128,7 @@ export default function MusicPlayerSlider({
           value={position}
           min={0}
           step={1}
-          max={duration}
+          max={audioState.duration}
           onChange={(_, value) => {
             setPosition(+value)
             //* Handle music currentTime
@@ -139,7 +143,10 @@ export default function MusicPlayerSlider({
         >
           <TinyText>{formatDuration(Math.floor(position))}</TinyText>
           <TinyText>
-            -{formatDuration(Math.floor(duration) - Math.floor(position))}
+            -
+            {formatDuration(
+              Math.floor(audioState.duration) - Math.floor(position),
+            )}
           </TinyText>
         </Stack>
         <Stack

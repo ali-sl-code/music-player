@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { Box, Stack, List, ListItem, Button } from '@mui/material'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  setTitle,
+  setArtist,
+  setGenre,
+  setImageSrc,
+  setAudioSrc,
+  setArtwork,
+} from './../slices/audioDataSlice'
 import MetaData from '../services/meta-data'
 import getFileList from './../utils/getFileList'
 import MusicPlayerSlider from './player'
@@ -7,6 +16,7 @@ import MusicPlayerSlider from './player'
 // import Logout from 'components/logout'
 import { InputFileContainer } from './player-components'
 import default_image from './../img/default_image.jpg'
+import { RootState } from './../store'
 
 // import './app-style.css'
 
@@ -22,15 +32,18 @@ interface Action {
 
 export default function Application() {
   const audio = useRef(null)
+  const dispatch = useDispatch()
 
-  const [imageSrc, setImageSrc] = useState()
-  const [title, setTitle] = useState()
-  const [artist, setArtist] = useState()
-  const [genre, setGenre] = useState()
-  const [artwork, setArtwork] = useState()
+  const audioState = useSelector((state: RootState) => state.audio)
+  // const [title, setTitle] = useState()
+  // const [artist, setArtist] = useState()
+  // const [genre, setGenre] = useState()
+  // const [audioSrc, setAudioSrc] = useState()
+  // const [artwork, setArtwork] = useState()
+  // const [imageSrc, setImageSrc] = useState()
+
   const [audioID, setAudioID] = useState(0)
   const [audioList, setAudioList] = useState([])
-  const [audioSrc, setAudioSrc] = useState()
   const [metaData, setMetaData] = useState(null)
   const [files, setFiles] = useState({})
   const [loop, setLoop] = useState(false)
@@ -97,13 +110,19 @@ export default function Application() {
 
   useEffect(() => {
     if (!metaData) return
-    metaData.getImageSrc().then(setImageSrc)
+    // metaData.getTitle().then(setTitle)
+    // metaData.getArtist().then(setArtist)
+    // metaData.getGenre().then(setGenre)
+    // metaData.getAudioSrc().then(setAudioSrc)
+    // metaData.getImageSrc().then(setImageSrc)
+    // metaData.getArtwork().then(setArtwork)
+    metaData.getTitle().then(artist => dispatch(setArtist(artist)))
+    metaData.getArtist().then(title => dispatch(setTitle(title)))
+    metaData.getGenre().then(gener => dispatch(setGenre(gener)))
+    metaData.getAudioSrc().then(audioSrc => dispatch(setAudioSrc(audioSrc)))
+    metaData.getImageSrc().then(imageSrc => dispatch(setImageSrc(imageSrc)))
+    metaData.getArtwork().then(artwork => dispatch(setArtwork(artwork)))
     metaData.getInfo().then(console.log)
-    metaData.getTitle().then(setTitle)
-    metaData.getArtist().then(setArtist)
-    metaData.getGenre().then(setGenre)
-    metaData.getArtwork().then(setArtwork)
-    metaData.getAudioSrc().then(setAudioSrc)
   }, [metaData])
 
   useEffect(() => {
@@ -131,33 +150,40 @@ export default function Application() {
   }, [])
 
   useEffect(() => {
-    if ('mediaSession' in navigator && title && artist && genre && artwork) {
+    if (
+      'mediaSession' in navigator &&
+      audioState.title &&
+      audioState.artist &&
+      audioState.genre &&
+      audioState.artwork
+    ) {
       navigator.mediaSession.metadata = new MediaMetadata({
-        title,
-        artist,
-        album: genre,
-        artwork,
+        title: audioState.title,
+        artist: audioState.artist,
+        album: audioState.genre,
+        artwork: audioState.artwork,
       })
     }
-  }, [artwork])
+  }, [audioState.artwork])
 
   return (
     // isAuthenticated && (
     <Box sx={{ backdropFilter: 'blur(2px)!important' }}>
       <Stack
         style={{
-          backgroundImage: `url('${imageSrc || default_image}')`,
+          backgroundImage: `url('${audioState.imageSrc || default_image}')`,
           height: '200vh',
           backgroundRepeat: 'unset',
         }}
       >
-        <audio src={audioSrc} ref={audio} loop={loop} autoPlay></audio>
+        <audio
+          src={audioState.audioSrc}
+          ref={audio}
+          loop={loop}
+          autoPlay
+        ></audio>
 
         <MusicPlayerSlider
-          genre={genre}
-          title={title}
-          artist={artist}
-          poster={imageSrc}
           audio={audio}
           switchSong={musicControlDispatch}
           loop={loop}
