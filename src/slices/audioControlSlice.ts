@@ -19,7 +19,7 @@ export const initialState: AudioState = {
 }
 
 export const audioControlSlice = createSlice({
-  name: 'audio',
+  name: 'audioControlSlice',
   initialState,
   reducers: {
     setLoop: (state, action: PayloadAction<AudioState['loop']>) => {

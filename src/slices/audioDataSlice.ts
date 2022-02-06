@@ -33,7 +33,7 @@ export const initialState: AudioState = {
 }
 
 export const audioData = createSlice({
-  name: 'audio',
+  name: 'audioData',
   initialState,
   reducers: {
     setDuration: (state, action: PayloadAction<AudioState['duration']>) => {
