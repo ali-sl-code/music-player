@@ -19,6 +19,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "next",
     "@mui/material": "next",
+    "@reduxjs/toolkit": "^1.7.2",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "base64-arraybuffer": "1.0.1",
@@ -27,6 +28,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-picture-in-picture": "^1.0.0",
+    "react-redux": "^7.2.6",
     "resize-base64": "^1.0.12",
     "react-router-dom": "^6.2.1",
     "typescript": "latest"
