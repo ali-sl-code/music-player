@@ -126,3 +126,44 @@ export const VolumeIndicator = styled(Slider)(({ theme }) => ({
     },
   },
 }))
+
+export const InputFileContainer = styled('div')({
+  position: 'relative',
+  width: '225px',
+  margin: '0 auto',
+  textAlign: 'center',
+  '& .input-file-trigger': {
+    display: 'block',
+    padding: '14px 45px',
+    backgroundColor: '#1b202e',
+    color: '#fff',
+    fontSize: '1em',
+    transition: 'all 0.4s',
+    cursor: 'pointer'
+  },
+  '& .input-file': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '225px',
+    opacity: 0,
+    padding: '14px 0',
+    cursor: 'pointer',
+  },
+  '& .input-file:hover + .input-file-trigger': {
+    backgroundColor: '#1e222e',
+    color: '#fff',
+  },
+  '& .input-file:focus + .input-file-trigger': {
+    backgroundColor: '#1e222e',
+    color: '#fff',
+  },
+  '& .input-file-trigger:hover': {
+    backgroundColor: '#1e222e',
+    color: '#fff',
+  },
+  '& .input-file-trigger:focus': {
+    backgroundColor: '#1e222e',
+    color: '#fff',
+  }
+})
