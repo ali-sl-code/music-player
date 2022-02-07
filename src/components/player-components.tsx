@@ -1,6 +1,7 @@
-import { Slider } from '@mui/material'
+import { List, ListItem, Slider } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+import { Box } from '@mui/system'
 
 export const WallPaper = styled('div')({
   position: 'absolute',
@@ -36,19 +37,17 @@ export const WallPaper = styled('div')({
 })
 
 export const Widget = styled('div')(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    width: '80vw',
-
-    marginTop: 50,
+  [theme.breakpoints.down('sm')]: {
+    width: '90vw !important',
   },
-
+  [theme.breakpoints.down('md')]: {
+    width: '50vw',
+  },
   padding: 16,
   borderRadius: 16,
-  width: '45vw',
-
-  height: 640,
+  width: '35vw',
   maxWidth: '100%',
-  margin: 'auto',
+  margin: '50px auto 0 auto !important',
   position: 'relative',
   zIndex: 1,
   backgroundColor:
@@ -57,11 +56,7 @@ export const Widget = styled('div')(({ theme }) => ({
 }))
 
 export const CoverImage = styled('div')(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    width: '80vw',
-  },
-  width: '45vw',
-  height: 450,
+  width: '100%',
   objectFit: 'cover',
   overflow: 'hidden',
   flexShrink: 0,
@@ -77,12 +72,16 @@ export const TinyText = styled(Typography)({
   opacity: 0.38,
   fontWeight: 500,
   letterSpacing: 0.2,
+  marginLeft: '10px',
+  marginTop: '30px',
 })
 
 export const TimeIndicator = styled(Slider)(({ theme }) => ({
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
   height: 4,
-  '& .MuiSlider-thumb': {
+  marginLeft: '10px',
+  marginTop: '40px',
+  '&.MuiSlider-thumb': {
     width: 8,
     height: 8,
     transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
@@ -108,8 +107,7 @@ export const TimeIndicator = styled(Slider)(({ theme }) => ({
 
 export const VolumeIndicator = styled(Slider)(({ theme }) => ({
   width: 90,
-  position: 'absolute',
-  right: 30,
+
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
   '& .MuiSlider-track': {
     border: 'none',
@@ -128,42 +126,95 @@ export const VolumeIndicator = styled(Slider)(({ theme }) => ({
 }))
 
 export const InputFileContainer = styled('div')({
-  position: 'relative',
-  width: '225px',
-  margin: '0 auto',
+  backgroundColor: 'rgba(255,255,255,0.4)',
+  backdropFilter: 'blur(40px)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'fixed',
+  left: 20,
+  bottom: 20,
+  width: '60px',
+  height: '60px',
   textAlign: 'center',
+  zIndex: 5,
+  borderRadius: '500px !important',
   '& .input-file-trigger': {
-    display: 'block',
-    padding: '14px 45px',
-    backgroundColor: '#1b202e',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '500px !important',
     color: '#fff',
-    fontSize: '1em',
-    transition: 'all 0.4s',
-    cursor: 'pointer'
-  },
-  '& .input-file': {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '225px',
-    opacity: 0,
-    padding: '14px 0',
+    width: '100%',
+    height: '100%',
     cursor: 'pointer',
   },
-  '& .input-file:hover + .input-file-trigger': {
-    backgroundColor: '#1e222e',
-    color: '#fff',
+  '& .input-file': {
+    display: 'none',
   },
-  '& .input-file:focus + .input-file-trigger': {
-    backgroundColor: '#1e222e',
-    color: '#fff',
-  },
-  '& .input-file-trigger:hover': {
-    backgroundColor: '#1e222e',
-    color: '#fff',
-  },
-  '& .input-file-trigger:focus': {
-    backgroundColor: '#1e222e',
-    color: '#fff',
+  '& svg': {
+    fontSize: '38px'
   }
 })
+
+// export const MyBox = styled(Box)(({ theme }) => ({
+//   [theme.breakpoints.down('md')]: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//   },
+
+//   display: 'flex',
+// }))
+
+export const PlayList = styled(List)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    transition: 'all .3s',
+    width: '30px',
+    height: '30px',
+    position: 'fixed',
+    borderRadius: 500,
+    left: 10,
+    top: 10,
+    overflow: 'hidden',
+    '&:after': {
+      content: '"List"',
+      width: '100%',
+      height: '100%',
+      textAlign: 'center',
+    },
+    '& > *': {
+      display: 'none !important'
+    },
+    '&:hover': {
+      '& > *': {
+        display: 'block !important'
+      },
+      '&:after': {
+        display: 'none'
+      },
+      width: '50vw',
+      height: '250px',
+      borderRadius: 16,
+      overflowY: 'scroll',
+    }
+  },
+  padding: 16,
+  borderRadius: 16,
+  width: '35vw',
+  height: '250px',
+  overflowY: 'scroll',
+  maxWidth: '100%',
+  margin: 'auto',
+  zIndex: 1,
+  marginTop: '20px',
+  marginInline: '0',
+  backgroundColor:
+    theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)',
+  backdropFilter: 'blur(40px)',
+}))
+
+export const MyItem = styled(ListItem)(({ theme }) => ({
+  color: 'rgb(128, 76, 9)',
+  fontSize: 'large',
+  width: '100%',
+}))

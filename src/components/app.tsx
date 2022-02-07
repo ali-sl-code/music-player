@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
-import { Box, Stack, List, ListItem, Button } from '@mui/material'
+import { Box, Stack, List, ListItem, Button, Grid } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   setTitle,
@@ -18,9 +18,11 @@ import getFileList from './../utils/getFileList'
 import MusicPlayerSlider from './player'
 // import { useAuth0 } from '@auth0/auth0-react'
 // import Logout from 'components/logout'
-import { InputFileContainer } from './player-components'
+import { InputFileContainer, PlayList, MyItem } from './player-components'
+import AddIcon from '@mui/icons-material/Add'
 import default_image from './../img/default_image.jpg'
 import { RootState } from './../store'
+import { color } from '@mui/system'
 
 // import './app-style.css'
 
@@ -190,9 +192,13 @@ export default function Application() {
     <Box sx={{ backdropFilter: 'blur(2px)!important' }}>
       <Stack
         style={{
+          height: '100vh',
+          display: 'flex',
           backgroundImage: `url('${audioState.imageSrc || default_image}')`,
-          height: '200vh',
-          backgroundRepeat: 'unset',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'scroll',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
       >
         <audio
@@ -202,8 +208,41 @@ export default function Application() {
           autoPlay
         ></audio>
 
-        <MusicPlayerSlider audio={audio} switchSong={musicControlDispatch} />
-        <Box>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <MusicPlayerSlider audio={audio} switchSong={musicControlDispatch} />
+
+          <PlayList>
+            {files ? (
+              audioListState.audioList.map(item => (
+                <ListItem
+                  data-id={item.id}
+                  key={item.id}
+                  sx={{
+                    color: 'rgb(128, 76, 9)',
+                    borderTop: '1px solid gray',
+                    fontSize: 'large',
+                    width: '100%',
+                    display: 'block'
+                  }}
+                  onClick={(e: any) => {
+                    metaDataHandler(e.target.getAttribute('data-id'))
+                  }}
+                  button
+                >
+                  {item.name}
+                </ListItem>
+              ))
+            ) : (
+              <p>Loading...</p>
+            )}
+          </PlayList>
+        </Grid>
+        <Box sx={{ marginTop: '100px' }}>
           <InputFileContainer>
             <input
               className="input-file"
@@ -214,35 +253,11 @@ export default function Application() {
               multiple
             />
             <label htmlFor="musicFile" className="input-file-trigger">
-              Select a file...
+              <AddIcon />
             </label>
             {/* <Logout /> */}
           </InputFileContainer>
         </Box>
-
-        <List sx={{ marginTop: '20px', marginInline: '5px' }}>
-          {files ? (
-            audioListState.audioList.map(item => (
-              <ListItem
-                data-id={item.id}
-                key={item.id}
-                sx={{
-                  color: 'wheat',
-                  borderTop: '1px solid gray',
-                  fontSize: 'large',
-                }}
-                onClick={(e: any) => {
-                  metaDataHandler(e.target.getAttribute('data-id'))
-                }}
-                button
-              >
-                {item.name}
-              </ListItem>
-            ))
-          ) : (
-            <p>Loading...</p>
-          )}
-        </List>
       </Stack>
     </Box>
     // )
