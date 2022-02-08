@@ -14,15 +14,8 @@
 Use the package manager [npm](https://www.npmjs.com/) to install music player.
 
 
-1
 ```bash
-npm i
-```
-
-
-2
-```bash
-npm start
+npm i && npm start
 ```
 
 
