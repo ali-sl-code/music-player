@@ -41,6 +41,8 @@ npm i && npm start
 #### Now playing you selected music
 ![](./public/image/music-player.png)
 
+[Supported audio coding formats](https://en.wikipedia.org/wiki/HTML5_audio)
+
 
 
 
