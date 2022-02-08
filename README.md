@@ -21,31 +21,6 @@ npm i && npm start
 
 
 
-## Usage
-
-- Sign in/up
-
-  - ![](./public/image/signin-up.png)
-
-
-- Click to file explore icon
-
-  - ![](./public/image/explore-icon.png)
-
-
-- Select music files
-
-  - ![](./public/image/explore.png)
-
-
-#### Now playing you selected music
-![](./public/image/music-player.png)
-
-[Supported audio coding formats](https://en.wikipedia.org/wiki/HTML5_audio)
-
-
-
-
 ## Play List
 You can click the play list items for play music
 ![](./public/image/playlist.png)
@@ -59,24 +34,19 @@ You can click the play list items for play music
 ![](./public/image/meta-data.png)
 
 
-#### Loop
-![](./public/image/loop-icon.png)
-
-
-#### Faster
-![](./public/image/speed-icon.png)
-
-
 #### Browser Picture-In-Picture
 ![](./public/image/picture-in-picture-icon.png)
 
 ![](./public/image/picture-in-picture.png)
 
 
+#### Sign in/up
+![](./public/image/signin-up.png)
 
 
-## Responsive Design
-![](./public/image/mobile.png)
+
+
+[Supported audio coding formats](https://en.wikipedia.org/wiki/HTML5_audio)
 
 
 
