@@ -1,9 +1,11 @@
 # Music Player
 
+
 ***The latest music player you need!***
 
 
 ![](./public/image/first-page.png)
+
 
 
 
@@ -22,6 +24,7 @@ npm i
 ```bash
 npm start
 ```
+
 
 
 
@@ -44,9 +47,11 @@ npm start
 
 
 
+
 ## Play List
 You can click the play list items for play music
 ![](./public/image/playlist.png)
+
 
 
 
@@ -66,12 +71,15 @@ You can click the play list items for play music
 
 #### Browser Picture-In-Picture
 ![](./public/image/picture-in-picture-icon.png)
+
 ![](./public/image/picture-in-picture.png)
+
 
 
 
 ## Responsive Design
 ![](./public/image/mobile.png)
+
 
 
 
