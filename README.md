@@ -24,15 +24,15 @@ npm i && npm start
 ## Usage
 
 - Sign in/up
-  - ![](./public/image/signin-up.png)
+  ![](./public/image/signin-up.png)
 
 
 - Click to file explore icon
-  - ![](./public/image/explore-icon.png)
+  ![](./public/image/explore-icon.png)
 
 
 - Select music files
-  - ![](./public/image/explore.png)
+  ![](./public/image/explore.png)
 
 
 #### Now playing you selected music
