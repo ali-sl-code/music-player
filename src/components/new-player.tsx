@@ -103,7 +103,7 @@ export default function MusicPlayer({ audio, switchSong }) {
       }}
     >
       {/*cover and info of song */}
-      <Stack alignItems="center" sx={{ width: '50%' }}>
+      <Stack alignItems="center" sx={{ width: '40%' }}>
         <Box>
           {audioState.imageSrc ? (
             <img
@@ -111,7 +111,7 @@ export default function MusicPlayer({ audio, switchSong }) {
               src={audioState.imageSrc}
               width="100%"
               style={{
-                borderRadius: '15px',
+                borderRadius: '30px',
                 boxShadow: '0px 5px 20px 3px rgba(0,0,0,0.28)',
               }}
             />
@@ -121,13 +121,13 @@ export default function MusicPlayer({ audio, switchSong }) {
               src={DefaultImage}
               width="100%"
               style={{
-                borderRadius: '15px',
+                borderRadius: '30px',
                 boxShadow: '0px 5px 20px 3px rgba(0,0,0,0.28)',
               }}
             />
           )}
         </Box>
-        <Box>
+        <Box {...(audioState && {mt:3})}>
           <Typography variant="caption" color="text.secondary" fontWeight={500}>
             {audioState.genre}
           </Typography>
@@ -138,7 +138,7 @@ export default function MusicPlayer({ audio, switchSong }) {
         </Box>
       </Stack>
       {/*time indicator */}
-      <Stack alignItems="center" sx={{ width: '80%' }}>
+      <Stack alignItems="center" sx={{ width: '80%'}} {...(audioState && {mt:3})}>
         <TimeIndicator
           aria-label="time-indicator"
           size="small"
@@ -229,23 +229,14 @@ export default function MusicPlayer({ audio, switchSong }) {
         >
           <RepeatIcon />
         </IconButton>
-        <IconButton
-          onClick={() => {
-            showPictureInPictureWindow(!audioControlState.pictureInPictureMode)
-            dispatch(
-              setPictureInPictureMode(!audioControlState.pictureInPictureMode),
-            )
-          }}
-          color={audioControlState.pictureInPictureMode ? 'primary' : 'default'}
-        >
-          <PictureInPictureAltIcon />
-        </IconButton>
+        
       </Stack>
       {/* volume*/}
       <Stack
         direction="row"
         justifyContent="center"
         alignItems="center"
+        mt={3}
         spacing={2}
       >
         <VolumeDownRounded
@@ -261,8 +252,19 @@ export default function MusicPlayer({ audio, switchSong }) {
         />
         <VolumeUpRounded
           htmlColor={lightIconColor}
-          // sx={{ position: 'absolute', right: 3 }}
         />
+        <IconButton
+          onClick={() => {
+            showPictureInPictureWindow(!audioControlState.pictureInPictureMode)
+            dispatch(
+              setPictureInPictureMode(!audioControlState.pictureInPictureMode),
+            )
+          }}
+          color={audioControlState.pictureInPictureMode ? 'primary' : 'default'}
+          
+        >
+          <PictureInPictureAltIcon />
+        </IconButton>
       </Stack>
     </Stack>
   )
