@@ -79,8 +79,6 @@ export const TinyText = styled(Typography)({
 export const TimeIndicator = styled(Slider)(({ theme }) => ({
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
   height: 4,
-  marginLeft: '10px',
-  marginTop: '40px',
   '&.MuiSlider-thumb': {
     width: 8,
     height: 8,
