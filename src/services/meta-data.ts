@@ -80,4 +80,12 @@ export default class MetaData {
     }))
     return artwork
   }
+
+  async getDuration() {
+    try {
+      await this.initiateMusicMetaDataBlob()
+      const { format: { duration } } = this.parsedBlob
+      return duration
+    } catch { }
+  }
 }
