@@ -112,7 +112,6 @@ export default function Application() {
   const fileHandler = useCallback(async e => {
     if (e.target.files.length) {
       getFileList(e.target.files).then(fileListInfo => {
-        console.log(fileListInfo)
         // @ts-ignore
         dispatch(setAudioList(fileListInfo))
       })
