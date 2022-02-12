@@ -5,7 +5,10 @@ export interface AudioState {
   audioList: [
     {
       id: number | null,
-      name: string | null
+      name: string | null,
+      imgSrc: string | null,
+      artist: string | null,
+      duration: string | null,
     },
   ]
 }
@@ -16,6 +19,9 @@ export const initialState: AudioState = {
     {
       id: null,
       name: null,
+      imgSrc: null,
+      artist: null,
+      duration: null,
     },
   ],
 }
