@@ -111,8 +111,11 @@ export default function Application() {
 
   const fileHandler = useCallback(async e => {
     if (e.target.files.length) {
-      // @ts-ignore
-      dispatch(setAudioList(getFileList(e)))
+      getFileList(e.target.files).then(fileListInfo => {
+        console.log(fileListInfo)
+        // @ts-ignore
+        dispatch(setAudioList(fileListInfo))
+      })
       setFiles(e.target.files)
       dispatch(setAudioID(0))
       setMetaData(new MetaData(e.target.files[0]))
@@ -137,8 +140,8 @@ export default function Application() {
     // metaData.getAudioSrc().then(setAudioSrc)
     // metaData.getImageSrc().then(setImageSrc)
     // metaData.getArtwork().then(setArtwork)
-    metaData.getTitle().then(artist => dispatch(setArtist(artist)))
-    metaData.getArtist().then(title => dispatch(setTitle(title)))
+    metaData.getTitle().then(title => dispatch(setTitle(title)))
+    metaData.getArtist().then(artist => dispatch(setArtist(artist)))
     metaData.getGenre().then(gener => dispatch(setGenre(gener)))
     metaData.getAudioSrc().then(audioSrc => dispatch(setAudioSrc(audioSrc)))
     metaData.getImageSrc().then(imageSrc => dispatch(setImageSrc(imageSrc)))
