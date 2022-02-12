@@ -177,7 +177,6 @@ export default function Application() {
       'mediaSession' in navigator &&
       audioState.title &&
       audioState.artist &&
-      audioState.genre &&
       audioState.artwork
     ) {
       navigator.mediaSession.metadata = new MediaMetadata({
