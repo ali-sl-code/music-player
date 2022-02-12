@@ -9,6 +9,8 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 import DefaultImage from '../../img/default_image.jpg'
 
+import '../app-style.css'
+
 export default function Cover() {
   const audioState = useSelector((state: RootState) => state.audio)
 
@@ -23,21 +25,13 @@ export default function Cover() {
           <img
             alt="can't win - Chilling Sunday"
             src={audioState.imageSrc}
-            width="100%"
-            style={{
-              borderRadius: '30px',
-              boxShadow: '0px 5px 20px 3px rgba(0,0,0,0.28)',
-            }}
+            className="img"
           />
         ) : (
           <img
             alt="can't win - Chilling Sunday"
             src={DefaultImage}
-            width="100%"
-            style={{
-              borderRadius: '30px',
-              boxShadow: '0px 5px 20px 3px rgba(0,0,0,0.28)',
-            }}
+            className="img"
           />
         )}
       </Box>

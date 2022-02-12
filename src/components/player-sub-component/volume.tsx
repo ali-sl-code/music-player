@@ -1,12 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux'
+import { setVolume } from 'slices/audioControlSlice'
+import { VolumeIndicator } from '../player-components'
+import { AppDispatch, RootState } from '../../store'
+
 import Stack from '@mui/material/Stack'
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded'
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded'
 import { useTheme } from '@mui/material/styles'
-
-import { AppDispatch, RootState } from '../../store'
-import { setVolume } from 'slices/audioControlSlice'
-import { useSelector, useDispatch } from 'react-redux'
-import { VolumeIndicator } from '../player-components'
 
 export default function Volume() {
   const audioControlState = useSelector(

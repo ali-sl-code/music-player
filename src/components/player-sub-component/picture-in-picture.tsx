@@ -1,11 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux'
+import { AppDispatch, RootState } from '../../store'
+import { setPictureInPictureMode } from 'slices/audioControlSlice'
+
+import showPictureInPictureWindow from '../../utils/pictureInPicture'
+
 import IconButton from '@mui/material/IconButton'
 import Stack from '@mui/material/Stack'
 import PictureInPictureAltIcon from '@mui/icons-material/PictureInPictureAlt'
-
-import { useSelector, useDispatch } from 'react-redux'
-import showPictureInPictureWindow from '../../utils/pictureInPicture'
-import { AppDispatch, RootState } from '../../store'
-import { setPictureInPictureMode } from 'slices/audioControlSlice'
 
 export default function PictureInPicture() {
   const audioControlState = useSelector(

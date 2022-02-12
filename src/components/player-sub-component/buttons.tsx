@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { AppDispatch, RootState } from '../../store'
+import { setFaster, setLoop, setPaused } from 'slices/audioControlSlice'
 
 import Stack from '@mui/material/Stack'
 import PauseRounded from '@mui/icons-material/PauseRounded'
@@ -11,7 +12,6 @@ import RepeatIcon from '@mui/icons-material/Repeat'
 import IconButton from '@mui/material/IconButton'
 import { useTheme } from '@mui/material/styles'
 
-import { setFaster, setLoop, setPaused } from 'slices/audioControlSlice'
 
 export default function Buttons({ audio, switchSong }) {
   const audioControlState = useSelector(

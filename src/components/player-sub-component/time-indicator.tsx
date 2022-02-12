@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { setPosition } from '../../slices/audioControlSlice'
-import Stack from '@mui/material/Stack'
-import { TimeIndicator, TinyText } from '../player-components'
 import { AppDispatch, RootState } from '../../store'
 
-export default function TimeIndicat({ audio }) {
+import Stack from '@mui/material/Stack'
+import { TimeIndicator, TinyText } from '../player-components'
+
+export default function Timer({ audio }) {
   const audioState = useSelector((state: RootState) => state.audio)
   const audioControlState = useSelector(
     (state: RootState) => state.audioControl,

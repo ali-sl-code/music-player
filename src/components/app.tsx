@@ -15,7 +15,7 @@ import {
 } from './../slices/audioListSlice'
 import MetaData from './../services/meta-data'
 import getFileList from './../utils/getFileList'
-import MusicPlayerSlider from './new-player'
+import MusicPlayerSlider from './player'
 // import { useAuth0 } from '@auth0/auth0-react'
 // import Logout from 'components/logout'
 import { InputFileContainer, PlayList, MyItem } from './player-components'

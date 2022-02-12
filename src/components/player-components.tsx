@@ -1,7 +1,6 @@
 import { List, ListItem, Slider } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import { Box } from '@mui/system'
 
 export const WallPaper = styled('div')({
   position: 'absolute',
