@@ -217,7 +217,7 @@ export default function Application() {
           alignItems="center"
         >
           <MusicPlayerSlider audio={audio} switchSong={musicControlDispatch} />
-
+{console.log(audioListState)}
           <PlayList>
             {files ? (
               audioListState.audioList.map(item => (
@@ -236,7 +236,11 @@ export default function Application() {
                   }}
                   button
                 >
+                  <img src={item.imgSrc} alt='imgSrc' width='30px' height='30px'/>
+
                   {item.name}
+                  {item.artist}
+                  {item.duration }
                 </ListItem>
               ))
             ) : (
