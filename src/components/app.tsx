@@ -225,11 +225,28 @@ export default function Application() {
                   data-id={item.id}
                   key={item.id}
                   sx={{
-                    color: 'rgb(128, 76, 9)',
+                    '@media screen and (max-width:900px)': {
+                      marginLeft:'4px',
+                    },
+                    color: 'black',
+                    backgroundColor:'white',
                     borderTop: '1px solid gray',
-                    fontSize: 'large',
-                    width: '100%',
-                    display: 'block'
+                    fontSize: 'small',
+                    width:'90%',
+                    margin:'0 auto',
+                    //  marginLeft:'17px',
+                    //  marginRight:'4px',
+                    marginTop:'10px',
+                    border:'none',
+                    borderRadius:'15px 15px 15px 15px',
+                    "&:hover": {
+                      backgroundColor: 'rgb(250, 217, 243)'
+                    },
+                    "&:focus":{
+                      backgroundColor:'rgb(201, 187, 201)'
+                    }
+  
+                    
                   }}
                   onClick={(e: any) => {
                     metaDataHandler(e.target.getAttribute('data-id'))
