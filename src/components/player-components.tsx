@@ -166,52 +166,16 @@ export const InputFileContainer = styled('div')({
 //   display: 'flex',
 // }))
 
-export const PlayList = styled(List)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    transition: 'all .3s',
-    width: '30px',
-    height: '30px',
-    position: 'fixed',
-    borderRadius: 500,
-    left: 10,
-    top: 10,
-    overflow: 'hidden',
-    '&:after': {
-      content: '"List"',
-      width: '100%',
-      height: '100%',
-      textAlign: 'center',
-    },
-    '& > *': {
-      display: 'none !important'
-    },
-    '&:hover': {
-      '& > *': {
-        display: 'block !important'
-      },
-      '&:after': {
-        display: 'none'
-      },
-      width: '50vw',
-      height: '250px',
-      borderRadius: 16,
-      overflowY: 'scroll',
-    }
-  },
-  padding: 16,
-  borderRadius: 16,
-  width: '35vw',
-  height: '250px',
-  overflowY: 'scroll',
-  maxWidth: '100%',
-  margin: 'auto',
-  zIndex: 1,
-  marginTop: '20px',
-  marginInline: '0',
-  backgroundColor:
-    theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)',
-  backdropFilter: 'blur(40px)',
-}))
+export const PlayList = styled(List)({
+  
+     marginTop: '40px',
+    marginRight:'35px' ,
+   overflow:'auto' ,
+   borderRadius:'15px 15px 15px 15px',
+   height:'300px',
+  //  width:'40%',
+    backgroundColor:'rgb(239, 216, 240)' 
+})
 
 export const MyItem = styled(ListItem)(({ theme }) => ({
   color: 'rgb(128, 76, 9)',

@@ -253,7 +253,7 @@ export default function Application() {
                   }}
                   button
                 >
-                  <img src={item.imgSrc} alt='imgSrc' width='30px' height='30px'/>
+                  {item.imgSrc!==null && <img src={item.imgSrc} alt='imgSrc' width='30px' height='30px'/> }
 
                   {item.name}
                   {item.artist}
