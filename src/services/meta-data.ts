@@ -5,8 +5,7 @@ import resize from 'resize-base64'
 const getImgBase64Src = (base64String: string) =>
   `data:image/jpg;base64, ${base64String}`
 
-const DEFAULT_IMG_SRC =
-  'https://i.picsum.photos/id/610/120/120.jpg?hmac=45n0S_eELB97ObNBUVFeCN4ujyfM5wXLGM7bVonjwQQ'
+const DEFAULT_IMG_SRC = './img/281016-musicbrain.jpg'
 
 export default class MetaData {
   file: File = null
