@@ -14,9 +14,11 @@ export default async function getFileList(files) {
 
     //* Duration display
     const formatDuration = value => {
+    
       const minute = Math.floor(value / 60)
       const secondLeft = Math.floor(value - minute * 60)
       return `${minute}:${secondLeft < 9 ? `0${secondLeft}` : secondLeft}`
+      
     }
 
     filedInfo.push({

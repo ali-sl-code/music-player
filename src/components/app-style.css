@@ -40,3 +40,126 @@
 .file-return:not(:empty) {
   margin: 1em 0;
 } */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(204, 0, 255); 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #470250; 
+}
+.s1{
+  position: absolute;
+  left:3vw ;
+}
+.s2{font-size:'1vw';
+  position: absolute;
+   left:7vw;
+   color: #470250;}
+.s3{font-size:0.8vw;color:'gray';position:absolute;left:23vw}
+.s4{
+  font-size:'0.8vw';
+ position: absolute;
+  left:40vw;
+  color: #470250;
+  
+}
+.firststyle{
+  font-size: 1vw;
+}
+@media only screen and (max-width: 900px) {
+  .s4{
+    font-size:1.2vw;
+   position: absolute;
+    left:48vw;
+    color: #470250;
+    
+  }
+  .s3{
+    font-size:1.2vw;
+    color:'gray';
+    position:absolute;
+    left:28vw}
+
+    .s2{font-size:1.5vw;
+      position: absolute;
+       left:10vw;
+       color: #470250;}
+       .s1{
+        position: absolute;
+        left:3.7vw ;
+       }
+       .firststyle{
+        font-size: 2vw;
+        margin-right: 4px;
+      }
+
+}
+@media only screen and (max-width: 600px) {
+  .s4{
+    font-size:1.5vw;
+   position: absolute;
+    left:62vw;
+    color: #470250;
+    
+  }
+  .s3{
+    font-size:1.5vw;
+    color:'gray';
+    position:absolute;
+    left:38vw}
+
+    .s2{font-size:1.8vw;
+      position: absolute;
+       left:16vw;
+       color: #470250;}
+       .s1{
+        position: absolute;
+        left:5vw ;
+       }
+       .firststyle{
+        font-size: 2.5vw;
+        
+      }
+
+}
+@media only screen and (max-width: 450px) {
+  .s4{
+    font-size:1.8vw;
+   position: absolute;
+    left:62vw;
+    color: #470250;
+    
+  }
+  .s3{
+    font-size:1.8vw;
+    color:'gray';
+    position:absolute;
+    left:38vw}
+
+    .s2{font-size:2vw;
+      position: absolute;
+       left:16vw;
+       color: #470250;}
+       .s1{
+        position: absolute;
+        left:7vw ;
+       }
+       .firststyle{
+        font-size: 2.5vw;
+        
+      }
+
+}

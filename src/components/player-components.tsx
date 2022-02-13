@@ -9,7 +9,7 @@ export const WallPaper = styled('div')({
   height: '100%',
   top: 0,
   left: 0,
-  overflow: 'hidden',
+  
   backdropFilter: 'blur(6px)!important',
   // zIndex:99,
   // backgroundImage:`url(${IMG1})`,
@@ -166,16 +166,22 @@ export const InputFileContainer = styled('div')({
 //   display: 'flex',
 // }))
 
-export const PlayList = styled(List)({
-  
+export const PlayList = styled(List)(({ theme }) =>({
+  [theme.breakpoints.down('md')]: {
+    width: '60%',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '80%',
+  },
      marginTop: '40px',
     marginRight:'35px' ,
    overflow:'auto' ,
    borderRadius:'15px 15px 15px 15px',
    height:'300px',
-  //  width:'40%',
-    backgroundColor:'rgb(239, 216, 240)' 
-})
+  width:'50%',
+    backgroundColor:'rgb(239, 216, 240)',
+    
+}))
 
 export const MyItem = styled(ListItem)(({ theme }) => ({
   color: 'rgb(128, 76, 9)',

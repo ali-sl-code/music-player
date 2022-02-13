@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { Box, Stack, List, ListItem, Button, Grid } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
+
 import {
   setTitle,
   setArtist,
@@ -24,7 +25,7 @@ import default_image from './../img/default_image.jpg'
 import { RootState } from './../store'
 import { color } from '@mui/system'
 
-// import './app-style.css'
+import './app-style.css'
 
 interface State {
   id: number | null,
@@ -39,6 +40,7 @@ interface Action {
 export default function Application() {
   const audio = useRef(null)
   const dispatch = useDispatch()
+  
 
   const audioState = useSelector((state: RootState) => state.audio)
   // const [title, setTitle] = useState()
@@ -196,11 +198,7 @@ export default function Application() {
         style={{
           height: '100vh',
           display: 'flex',
-          backgroundImage: `url('${audioState.imageSrc || default_image}')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'scroll',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+        backgroundColor:'rgb(252, 182, 241)'
         }}
       >
         <audio
@@ -216,31 +214,35 @@ export default function Application() {
           justifyContent="center"
           alignItems="center"
         >
-          <MusicPlayerSlider audio={audio} switchSong={musicControlDispatch} />
+          {/* <MusicPlayerSlider audio={audio} switchSong={musicControlDispatch} /> */}
 {console.log(audioListState)}
+
           <PlayList>
             {files ? (
               audioListState.audioList.map(item => (
+                item.name !==null &&
                 <ListItem
                   data-id={item.id}
                   key={item.id}
                   sx={{
                     '@media screen and (max-width:900px)': {
-                      marginLeft:'4px',
+                      // marginLeft:'4px',
                     },
                     color: 'black',
                     backgroundColor:'white',
                     borderTop: '1px solid gray',
                     fontSize: 'small',
                     width:'90%',
+                    height:'50px',
                     margin:'0 auto',
+                    position:'relative',
                     //  marginLeft:'17px',
                     //  marginRight:'4px',
                     marginTop:'10px',
                     border:'none',
                     borderRadius:'15px 15px 15px 15px',
                     "&:hover": {
-                      backgroundColor: 'rgb(250, 217, 243)'
+                      backgroundColor: 'rgb(224, 148, 212)'
                     },
                     "&:focus":{
                       backgroundColor:'rgb(201, 187, 201)'
@@ -253,11 +255,32 @@ export default function Application() {
                   }}
                   button
                 >
+                  <div>
+                    <Stack sx={{
+                      display:'flex',
+                      flexDirection:'row',
+                      flexWrap:'nowrap',
+                      alignItems:'center'
+                      // gap:'30px'
+                    }}> 
+                    
+                      <h4 className='firststyle'>
+                       {item.id+1}
+                       </h4>
+                       <div className='s1'>
                   {item.imgSrc!==null && <img src={item.imgSrc} alt='imgSrc' width='30px' height='30px'/> }
-
-                  {item.name}
+</div>
+<h4 className='s2' >
+                {item.name}
+                </h4>
+                <h4 className='s3' >
                   {item.artist}
+                  </h4>
+                  <h4 className='s4' >
                   {item.duration }
+                  </h4>
+                  </Stack> 
+                  </div>
                 </ListItem>
               ))
             ) : (
