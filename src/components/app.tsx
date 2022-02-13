@@ -89,6 +89,33 @@ export default function Application() {
   })
 
   useEffect(() => {
+    if (files && Object.keys(files).length !== 0) {
+      if (audio.current !== null) {
+        audio.current.addEventListener('ended', () => {
+          if (!audioControlState.loop) {
+            // @ts-ignore
+            if (files.length - 1 != audioListState.playingAudioId) {
+              metaDataHandler(audioListState.playingAudioId + 1)
+            }
+          }
+        })
+      }
+    }
+
+    return () => {
+      audio.current.removeEventListener('ended', () => {
+        if (!audioControlState.loop) {
+          // @ts-ignore
+          if (files.length - 1 != audioListState.playingAudioId) {
+            metaDataHandler(audioListState.playingAudioId + 1)
+          }
+        }
+      })
+    }
+  }, [files, audio.current])
+
+  useEffect(() => {
+    console.log(`🟢Loged 👉 useEffect 👉 files`, files)
     if (files) {
       if (musicControl.status == 'NEXT') {
         // @ts-ignore
@@ -149,30 +176,6 @@ export default function Application() {
   }, [metaData])
 
   useEffect(() => {
-    if (audio.current !== null) {
-      audio.current.addEventListener('ended', () => {
-        if (!audioControlState.loop) {
-          // @ts-ignore
-          if (files.length - 1 != audioListState.playingAudioId) {
-            metaDataHandler(audioListState.playingAudioId + 1)
-          }
-        }
-      })
-    }
-
-    return () => {
-      audio.current.removeEventListener('ended', () => {
-        if (!audioControlState.loop) {
-          // @ts-ignore
-          if (files.length - 1 != audioListState.playingAudioId) {
-            metaDataHandler(audioListState.playingAudioId + 1)
-          }
-        }
-      })
-    }
-  }, [])
-
-  useEffect(() => {
     if (
       'mediaSession' in navigator &&
       audioState.title &&
@@ -228,7 +231,7 @@ export default function Application() {
                     borderTop: '1px solid gray',
                     fontSize: 'large',
                     width: '100%',
-                    display: 'block'
+                    display: 'block',
                   }}
                   onClick={(e: any) => {
                     metaDataHandler(e.target.getAttribute('data-id'))
