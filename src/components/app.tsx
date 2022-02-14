@@ -115,7 +115,6 @@ export default function Application() {
   }, [files, audio.current])
 
   useEffect(() => {
-    console.log(`🟢Loged 👉 useEffect 👉 files`, files)
     if (files) {
       if (musicControl.status == 'NEXT') {
         // @ts-ignore

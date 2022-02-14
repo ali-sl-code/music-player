@@ -16,7 +16,9 @@ export default class MetaData {
   }
 
   async initiateMusicMetaDataBlob() {
-    if (!this.parsedBlob) this.parsedBlob = await parseBlob(this.file)
+    try {
+      if (!this.parsedBlob) this.parsedBlob = await parseBlob(this.file)
+    } catch (error) {}
   }
 
   async getImageSrc() {
@@ -67,20 +69,29 @@ export default class MetaData {
   }
 
   async getAudioSrc() {
-    return URL.createObjectURL(this.file)
+    try {
+      return URL.createObjectURL(this.file)
+    } catch (error) {}
   }
 
   async getArtwork() {
-    let sizes: number[] = [96, 128, 192, 256, 384, 512]
-    let dataImage = await this.getImageSrc()
-    const artwork = sizes.map(value => ({
-      src:
-        dataImage === DEFAULT_IMG_SRC
-          ? dataImage
-          : resize(dataImage, value, value),
-      sizes: `${value}x${value}`,
-    }))
-    return artwork
+    try {
+      let sizes: number[] = [96, 128, 192, 256, 384, 512]
+      let dataImage = await this.getImageSrc()
+      const artwork = sizes.map(value => ({
+        src:
+          dataImage === DEFAULT_IMG_SRC
+            ? dataImage
+            : resize(dataImage, value, value),
+        sizes: `${value}x${value}`,
+      }))
+      return artwork
+    } catch (error) {
+      return {
+        src: DEFAULT_IMG_SRC,
+        sizes: `512x512`,
+      }
+    }
   }
 
   async getDuration() {

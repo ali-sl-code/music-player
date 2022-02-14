@@ -1,7 +1,6 @@
 import { List, ListItem, Slider } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import { Box } from '@mui/system'
 
 export const WallPaper = styled('div')({
   position: 'absolute',
@@ -73,14 +72,12 @@ export const TinyText = styled(Typography)({
   fontWeight: 500,
   letterSpacing: 0.2,
   marginLeft: '10px',
-  marginTop: '30px',
+  marginTop: '5px',
 })
 
 export const TimeIndicator = styled(Slider)(({ theme }) => ({
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
   height: 4,
-  marginLeft: '10px',
-  marginTop: '40px',
   '&.MuiSlider-thumb': {
     width: 8,
     height: 8,
@@ -106,7 +103,7 @@ export const TimeIndicator = styled(Slider)(({ theme }) => ({
 }))
 
 export const VolumeIndicator = styled(Slider)(({ theme }) => ({
-  width: 90,
+  width: '30%',
 
   color: theme.palette.mode === 'dark' ? '#fff' : 'rgba(0,0,0,0.87)',
   '& .MuiSlider-track': {
@@ -153,8 +150,8 @@ export const InputFileContainer = styled('div')({
     display: 'none',
   },
   '& svg': {
-    fontSize: '38px'
-  }
+    fontSize: '38px',
+  },
 })
 
 // export const MyBox = styled(Box)(({ theme }) => ({
@@ -183,20 +180,20 @@ export const PlayList = styled(List)(({ theme }) => ({
       textAlign: 'center',
     },
     '& > *': {
-      display: 'none !important'
+      display: 'none !important',
     },
     '&:hover': {
       '& > *': {
-        display: 'block !important'
+        display: 'block !important',
       },
       '&:after': {
-        display: 'none'
+        display: 'none',
       },
       width: '50vw',
       height: '250px',
       borderRadius: 16,
       overflowY: 'scroll',
-    }
+    },
   },
   padding: 16,
   borderRadius: 16,
