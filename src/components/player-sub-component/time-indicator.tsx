@@ -22,7 +22,7 @@ export default function Timer({ audio }) {
     <Stack
       alignItems="center"
       sx={{ width: '80%' }}
-      {...(audioState && { mt: 3 })}
+      {...(audioState && { mt: 1 })}
     >
       <TimeIndicator
         aria-label="time-indicator"

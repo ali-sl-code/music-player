@@ -35,7 +35,7 @@ export default function Cover() {
           />
         )}
       </Box>
-      <Box {...(audioState && { mt: 3 })}>
+      <Box {...(audioState && { mt: 1 })} sx={{ width: '100%' }}>
         <Typography variant="caption" color="text.secondary" fontWeight={500}>
           {audioState.genre}
         </Typography>

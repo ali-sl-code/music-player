@@ -23,7 +23,7 @@ export default function Volume() {
       justifyContent="center"
       alignItems="center"
       spacing={2}
-      sx={{ width: '100%', my: 3 }}
+      sx={{ width: '100%', mt: 2, mb: 1 }}
     >
       <VolumeDownRounded htmlColor={lightIconColor} />
       <VolumeIndicator
