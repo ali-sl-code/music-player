@@ -8,7 +8,7 @@ export const WallPaper = styled('div')({
   height: '100%',
   top: 0,
   left: 0,
-  overflow: 'hidden',
+
   backdropFilter: 'blur(6px)!important',
   // zIndex:99,
   // backgroundImage:`url(${IMG1})`,
@@ -123,6 +123,7 @@ export const VolumeIndicator = styled(Slider)(({ theme }) => ({
 }))
 
 export const InputFileContainer = styled('div')({
+  boxShadow: '0px 0px 10px 2px rgba(0,0,0,0.28)',
   backgroundColor: 'rgba(255,255,255,0.4)',
   backdropFilter: 'blur(40px)',
   display: 'flex',
@@ -165,49 +166,15 @@ export const InputFileContainer = styled('div')({
 
 export const PlayList = styled(List)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    transition: 'all .3s',
-    width: '30px',
-    height: '30px',
-    position: 'fixed',
-    borderRadius: 500,
-    left: 10,
-    top: 10,
-    overflow: 'hidden',
-    '&:after': {
-      content: '"List"',
-      width: '100%',
-      height: '100%',
-      textAlign: 'center',
-    },
-    '& > *': {
-      display: 'none !important',
-    },
-    '&:hover': {
-      '& > *': {
-        display: 'block !important',
-      },
-      '&:after': {
-        display: 'none',
-      },
-      width: '50vw',
-      height: '250px',
-      borderRadius: 16,
-      overflowY: 'scroll',
-    },
+    width: '60%',
   },
-  padding: 16,
-  borderRadius: 16,
-  width: '35vw',
-  height: '250px',
-  overflowY: 'scroll',
-  maxWidth: '100%',
-  margin: 'auto',
-  zIndex: 1,
-  marginTop: '20px',
-  marginInline: '0',
-  backgroundColor:
-    theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)',
-  backdropFilter: 'blur(40px)',
+  [theme.breakpoints.down('sm')]: {
+    width: '80%',
+  },
+  overflow: 'auto',
+  borderRadius: '15px 15px 15px 15px',
+  height: '550px',
+  width: '50%',
 }))
 
 export const MyItem = styled(ListItem)(({ theme }) => ({

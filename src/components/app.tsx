@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { Box, Stack, List, ListItem, Button, Grid } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
+
 import {
   setTitle,
   setArtist,
@@ -24,7 +25,7 @@ import default_image from './../img/default_image.jpg'
 import { RootState } from './../store'
 import { color } from '@mui/system'
 
-// import './app-style.css'
+import './app-style.css'
 
 interface State {
   id: number | null,
@@ -88,31 +89,55 @@ export default function Application() {
     status: null,
   })
 
-  useEffect(() => {
-    if (files && Object.keys(files).length !== 0) {
-      if (audio.current !== null) {
-        audio.current.addEventListener('ended', () => {
-          if (!audioControlState.loop) {
-            // @ts-ignore
-            if (files.length - 1 != audioListState.playingAudioId) {
-              metaDataHandler(audioListState.playingAudioId + 1)
-            }
-          }
-        })
-      }
-    }
+  // useEffect(() => {
+  //   console.log(`🟢Loged 👉 audioListState.playingAudioId`, audioListState.playingAudioId)
+  //   if (!audioControlState.loop) {
+  //     audio.current.addEventListener('ended', () => {
+  //       if (files && Object.keys(files).length !== 0) {
+  //         if (audio.current !== null) {
+  //           // @ts-ignore
+  //           if (files.length - 1 != audioListState.playingAudioId) {
+  //             console.log("audioListState.playingAudioId ended", audioListState.playingAudioId)
+  //             console.log("audioListState.playingAudioId + 1 ended", audioListState.playingAudioId + 1)
+  //             metaDataHandler(audioListState.playingAudioId + 1)
+  //           }
+  //         }
+  //       }
+  //     })
+  //   }
 
-    return () => {
-      audio.current.removeEventListener('ended', () => {
-        if (!audioControlState.loop) {
+  //   return () => {
+  //     audio.current.removeEventListener('ended', () => {
+  //       if (files && Object.keys(files).length !== 0) {
+  //         if (audio.current !== null) {
+  //           // @ts-ignore
+  //           if (files.length - 1 != audioListState.playingAudioId) {
+  //             metaDataHandler(audioListState.playingAudioId + 1)
+  //           }
+  //         }
+  //       }
+  //     })
+  //   }
+  // }, [files])
+
+  const handleEnded = useCallback(
+    playingAudioId => {
+      if (!audioControlState.loop) {
+        if (files && Object.keys(files).length !== 0) {
           // @ts-ignore
-          if (files.length - 1 != audioListState.playingAudioId) {
-            metaDataHandler(audioListState.playingAudioId + 1)
+          if (files.length - 1 != playingAudioId) {
+            console.log('audioListState.playingAudioId ended', playingAudioId)
+            console.log(
+              'audioListState.playingAudioId + 1 ended',
+              playingAudioId + 1,
+            )
+            metaDataHandler(playingAudioId + 1)
           }
         }
-      })
-    }
-  }, [files, audio.current])
+      }
+    },
+    [files],
+  )
 
   useEffect(() => {
     if (files) {
@@ -148,10 +173,12 @@ export default function Application() {
   }, [])
 
   const metaDataHandler = useCallback(
-    id => {
+    (id: number) => {
       if (files) {
-        setMetaData(new MetaData(files[id]))
-        dispatch(setAudioID(id))
+        console.log(`🟢Loged 👉 metaDataHandler 👉 id`, Number(id))
+        console.log(`🟢Loged 👉 metaDataHandler 👉 id`, typeof Number(id))
+        dispatch(setAudioID(Number(id)))
+        setMetaData(new MetaData(files[Number(id)]))
       }
     },
     [files],
@@ -197,55 +224,97 @@ export default function Application() {
         style={{
           height: '100vh',
           display: 'flex',
-          backgroundImage: `url('${audioState.imageSrc || default_image}')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'scroll',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundColor: 'rgb(252, 182, 241)',
         }}
       >
         <audio
           src={audioState.audioSrc}
           ref={audio}
           loop={audioControlState.loop}
+          onEnded={() => {
+            handleEnded(audioListState.playingAudioId)
+          }}
           autoPlay
         ></audio>
 
         <Grid
           container
-          direction="column"
-          justifyContent="center"
+          direction="row"
+          justifyContent="space-around"
           alignItems="center"
+          sx={{ height: '100%' }}
         >
           <MusicPlayerSlider audio={audio} switchSong={musicControlDispatch} />
-
           <PlayList>
             {files ? (
-              audioListState.audioList.map(item => (
-                <ListItem
-                  data-id={item.id}
-                  key={item.id}
-                  sx={{
-                    color: 'rgb(128, 76, 9)',
-                    borderTop: '1px solid gray',
-                    fontSize: 'large',
-                    width: '100%',
-                    display: 'block',
-                  }}
-                  onClick={(e: any) => {
-                    metaDataHandler(e.target.getAttribute('data-id'))
-                  }}
-                  button
-                >
-                  {item.name}
-                </ListItem>
-              ))
+              audioListState.audioList.map(
+                item =>
+                  item.name !== null && (
+                    <ListItem
+                      data-id={item.id}
+                      key={item.id}
+                      sx={{
+                        color: 'black',
+                        backgroundColor: 'white',
+                        borderTop: '1px solid gray',
+                        fontSize: 'small',
+                        width: '90%',
+                        height: '50px',
+                        margin: '0 auto',
+                        position: 'relative',
+                        //  marginLeft:'17px',
+                        //  marginRight:'4px',
+                        marginTop: '10px',
+                        border: 'none',
+                        borderRadius: '10px',
+                        '&:hover': {
+                          backgroundColor: 'rgb(224, 148, 212)',
+                        },
+                        '&:focus': {
+                          backgroundColor: 'rgb(201, 187, 201)',
+                        },
+                      }}
+                      onClick={(e: any) => {
+                        metaDataHandler(e.target.getAttribute('data-id'))
+                      }}
+                      button
+                    >
+                      <div>
+                        <Stack
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            flexWrap: 'nowrap',
+                            alignItems: 'center',
+                            // gap:'30px'
+                          }}
+                        >
+                          <h4 className="firststyle">{item.id + 1}</h4>
+                          <div className="s1">
+                            {item.imgSrc !== null && (
+                              <img
+                                src={item.imgSrc}
+                                alt="imgSrc"
+                                width="30px"
+                                height="30px"
+                                style={{ borderRadius: '5px' }}
+                              />
+                            )}
+                          </div>
+                          <h4 className="s2">{item.name}</h4>
+                          <h4 className="s3">{item.artist}</h4>
+                          <h4 className="s4">{item.duration}</h4>
+                        </Stack>
+                      </div>
+                    </ListItem>
+                  ),
+              )
             ) : (
               <p>Loading...</p>
             )}
           </PlayList>
         </Grid>
-        <Box sx={{ marginTop: '100px' }}>
+        <Box>
           <InputFileContainer>
             <input
               className="input-file"
@@ -256,7 +325,7 @@ export default function Application() {
               multiple
             />
             <label htmlFor="musicFile" className="input-file-trigger">
-              <AddIcon />
+              <AddIcon sx={{ color: '#000' }} />
             </label>
             {/* <Logout /> */}
           </InputFileContainer>
