@@ -14,7 +14,7 @@ export interface AudioState {
 }
 
 export const initialState: AudioState = {
-  playingAudioId: 0,
+  playingAudioId: null,
   audioList: [
     {
       id: null,
