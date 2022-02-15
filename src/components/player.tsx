@@ -68,11 +68,11 @@ export default function MusicPlayer({ audio, switchSong }) {
     <Stack
       alignItems="center"
       sx={{
-        width: '100%',
+        width: '35%',
         overflow: 'hidden',
         backgroundColor: '#fff',
         borderRadius: '20px',
-        padding: '50px 0',
+        padding: '20px 0',
         boxShadow: '0px 5px 15px 7px rgba(0,0,0,0.15)',
       }}
     >
@@ -84,7 +84,7 @@ export default function MusicPlayer({ audio, switchSong }) {
       <Buttons audio={audio} switchSong={switchSong} />
       {/* volume*/}
       <Volume />
-      <PictureInPicture />
+      {/* <PictureInPicture /> */}
     </Stack>
   )
 }
