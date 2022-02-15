@@ -75,8 +75,8 @@ export default class MetaData {
   }
 
   async getArtwork() {
+    let sizes: number[] = [96, 128, 192, 256, 384, 512]
     try {
-      let sizes: number[] = [96, 128, 192, 256, 384, 512]
       let dataImage = await this.getImageSrc()
       const artwork = sizes.map(value => ({
         src:
@@ -87,10 +87,11 @@ export default class MetaData {
       }))
       return artwork
     } catch (error) {
-      return {
+      const artwork = sizes.map(value => ({
         src: DEFAULT_IMG_SRC,
-        sizes: `512x512`,
-      }
+        sizes: `${value}x${value}`,
+      }))
+      return artwork
     }
   }
 
