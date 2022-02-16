@@ -89,48 +89,12 @@ export default function Application() {
     status: null,
   })
 
-  // useEffect(() => {
-  //   console.log(`🟢Loged 👉 audioListState.playingAudioId`, audioListState.playingAudioId)
-  //   if (!audioControlState.loop) {
-  //     audio.current.addEventListener('ended', () => {
-  //       if (files && Object.keys(files).length !== 0) {
-  //         if (audio.current !== null) {
-  //           // @ts-ignore
-  //           if (files.length - 1 != audioListState.playingAudioId) {
-  //             console.log("audioListState.playingAudioId ended", audioListState.playingAudioId)
-  //             console.log("audioListState.playingAudioId + 1 ended", audioListState.playingAudioId + 1)
-  //             metaDataHandler(audioListState.playingAudioId + 1)
-  //           }
-  //         }
-  //       }
-  //     })
-  //   }
-
-  //   return () => {
-  //     audio.current.removeEventListener('ended', () => {
-  //       if (files && Object.keys(files).length !== 0) {
-  //         if (audio.current !== null) {
-  //           // @ts-ignore
-  //           if (files.length - 1 != audioListState.playingAudioId) {
-  //             metaDataHandler(audioListState.playingAudioId + 1)
-  //           }
-  //         }
-  //       }
-  //     })
-  //   }
-  // }, [files])
-
   const handleEnded = useCallback(
     playingAudioId => {
       if (!audioControlState.loop) {
         if (files && Object.keys(files).length !== 0) {
           // @ts-ignore
           if (files.length - 1 != playingAudioId) {
-            console.log('audioListState.playingAudioId ended', playingAudioId)
-            console.log(
-              'audioListState.playingAudioId + 1 ended',
-              playingAudioId + 1,
-            )
             metaDataHandler(playingAudioId + 1)
           }
         }
@@ -175,8 +139,6 @@ export default function Application() {
   const metaDataHandler = useCallback(
     (id: number) => {
       if (files) {
-        console.log(`🟢Loged 👉 metaDataHandler 👉 id`, Number(id))
-        console.log(`🟢Loged 👉 metaDataHandler 👉 id`, typeof Number(id))
         dispatch(setAudioID(Number(id)))
         setMetaData(new MetaData(files[Number(id)]))
       }
