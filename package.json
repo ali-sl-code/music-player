@@ -1,9 +1,12 @@
 {
+  "homepage": "http://ali-sl-code.github.io/music-player",
   "name": "weblite-music",
   "title": "Weblite Music",
   "description": "weblite awesome music player based on material ui template",
   "main": "index.tsx",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "dev": "react-scripts start",
     "build": "react-scripts build",
@@ -11,6 +14,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "gh-pages": "^3.2.3",
     "react-scripts": "latest"
   },
   "dependencies": {
